@@ -1,0 +1,675 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/avatar.png">
+  <link rel="icon" href="/img/avatar.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="TvT">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="反射机制反射的意义即动态特性，p师傅给了一个这样的定义“⼀段代码，改变其中的变量，将会导致 这段代码产⽣功能性的变化，我称之为动态特性”。 我们知道如果我们要实现一个类，一般来说是直接使用new方法来进行获取类的对象。 1demo a&#x3D;new demo();  那么a就是demo类的一个对象，但是如果我们要实现运行时进行获取类的功能怎么办。比如我们由用户来决定获取什么类。这时反射就可以实现这样的功">
+<meta property="og:type" content="article">
+<meta property="og:title" content="反射机制">
+<meta property="og:url" content="http://example.com/2023/04/11/%E5%8F%8D%E5%B0%84%E6%9C%BA%E5%88%B6/index.html">
+<meta property="og:site_name" content="TvT&#39;Blog">
+<meta property="og:description" content="反射机制反射的意义即动态特性，p师傅给了一个这样的定义“⼀段代码，改变其中的变量，将会导致 这段代码产⽣功能性的变化，我称之为动态特性”。 我们知道如果我们要实现一个类，一般来说是直接使用new方法来进行获取类的对象。 1demo a&#x3D;new demo();  那么a就是demo类的一个对象，但是如果我们要实现运行时进行获取类的功能怎么办。比如我们由用户来决定获取什么类。这时反射就可以实现这样的功">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/img/1.jpg">
+<meta property="article:published_time" content="2023-04-10T17:14:37.733Z">
+<meta property="article:modified_time" content="2023-04-10T17:14:29.955Z">
+<meta property="article:author" content="TvT">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/img/1.jpg">
+  
+  
+  
+  <title>反射机制 - TvT&#39;Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="TvT'Blog" type="application/atom+xml">
+</head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>TvT</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/preview.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="反射机制"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-04-11 01:14" pubdate>
+          2023年4月11日 凌晨
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          2.8k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          24 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">反射机制</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="反射机制"><a href="#反射机制" class="headerlink" title="反射机制"></a>反射机制</h1><h2 id="反射的意义"><a href="#反射的意义" class="headerlink" title="反射的意义"></a>反射的意义</h2><p>即动态特性，p师傅给了一个这样的定义“⼀段代码，改变其中的变量，将会导致 这段代码产⽣功能性的变化，我称之为动态特性”。</p>
+<p>我们知道如果我们要实现一个类，一般来说是直接使用new方法来进行获取类的对象。</p>
+<figure class="highlight maxima"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs maxima"><span class="hljs-built_in">demo</span> a=<span class="hljs-built_in">new</span> <span class="hljs-built_in">demo</span>();<br></code></pre></td></tr></table></figure>
+
+<p>那么a就是demo类的一个对象，但是如果我们要实现运行时进行获取类的功能怎么办。比如我们由用户来决定获取什么类。这时反射就可以实现这样的功能。这也就是为什么反射多用在框架中的原因了，因为框架就是一个半成品的软件，它的类由用户传入。但是反射功能也不只这些，我只是认为这个最好理解它的意义。</p>
+<h2 id="类信息的获取"><a href="#类信息的获取" class="headerlink" title="类信息的获取"></a>类信息的获取</h2><p>可以简单就是反方向取得一个包含类的一些信息的Class对象。本质上来说即为一个类的对象。</p>
+<figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs abnf">Person p1 <span class="hljs-operator">=</span> new Person()<span class="hljs-comment">;</span><br><br>Class c1 <span class="hljs-operator">=</span> p1.getClass()<span class="hljs-comment">;/通过对象创建</span><br>Class c2 <span class="hljs-operator">=</span> v<span class="hljs-comment">;//已经加载了某个类，获取它的Class对象。</span><br>Class c3 <span class="hljs-operator">=</span> Class.forName(<span class="hljs-string">&quot;com.ys.reflex.Person&quot;</span>)<span class="hljs-comment">;//通过完整的名字来获取，可以看做是由类创建</span><br>类名.class （类字面常量）<br></code></pre></td></tr></table></figure>
+
+<h4 id="Class-forName"><a href="#Class-forName" class="headerlink" title="Class.forName()"></a>Class.forName()</h4><figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs reasonml"><span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Class</span>.</span></span><span class="hljs-keyword">for</span><span class="hljs-constructor">Name(<span class="hljs-params">className</span>)</span><br><span class="hljs-comment">// 等于</span><br><span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Class</span>.</span></span><span class="hljs-keyword">for</span><span class="hljs-constructor">Name(<span class="hljs-params">className</span>, <span class="hljs-params">true</span>, <span class="hljs-params">currentLoader</span>）</span><br></code></pre></td></tr></table></figure>
+
+<p>默认情况下， forName 的第⼀个参数是类名；第⼆个参数表示是否初始化；第三个参数就 是 ClassLoader 。其中的第2个参数的初始化即确定了类中的一些代码是否被执行。在一个类中， static {} 就是在“类初始化”的时候调⽤的，⽽ {} 中的代码会放在构造函数的 super() 后⾯， 但在当前构造函数内容的前⾯。</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs csharp"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">TrainPrint</span> &#123;<br> &#123;<br> System.<span class="hljs-keyword">out</span>.printf(<span class="hljs-string">&quot;Empty block initial %s\n&quot;</span>, <span class="hljs-keyword">this</span>.getClass());<br> &#125;<br> <span class="hljs-keyword">static</span> &#123;<br> System.<span class="hljs-keyword">out</span>.printf(<span class="hljs-string">&quot;Static initial %s\n&quot;</span>, TrainPrint.<span class="hljs-keyword">class</span>);<br> &#125;<br> <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">TrainPrint</span>()</span> &#123;<br> System.<span class="hljs-keyword">out</span>.printf(<span class="hljs-string">&quot;Initial %s\n&quot;</span>, <span class="hljs-keyword">this</span>.getClass());<br> &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>对于TrainPrint类，我们使用了类初始来进行创建的话，就会执行</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-type">static</span> &#123;<br> System.out.<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Static initial %s\n&quot;</span>, TrainPrint.<span class="hljs-keyword">class</span>);<br> &#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="类名-class"><a href="#类名-class" class="headerlink" title="类名.class"></a>类名.class</h3><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs">可以通过类描述符来进行引用<br><br></code></pre></td></tr></table></figure>
+
+<p><img src="https://article.biliimg.com/bfs/article/23e381d2e6a822f1cab0f6d39af84324e9b1d66e.png" srcset="/img/loading.gif" lazyload alt="image-20230321090037972"></p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs pgsql"><span class="hljs-keyword">Class</span> c3=<span class="hljs-type">Integer</span>.<span class="hljs-keyword">class</span>.forName(&quot;[B&quot;);<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://article.biliimg.com/bfs/article/d63ba76f0255e25575187eb8335a56028d7f0224.png" srcset="/img/loading.gif" lazyload alt="image-20230321092902763"></p>
+<h2 id="调用类方法"><a href="#调用类方法" class="headerlink" title="调用类方法"></a>调用类方法</h2><h3 id="无参构造方法"><a href="#无参构造方法" class="headerlink" title="无参构造方法"></a>无参构造方法</h3><blockquote>
+<p>newInstance()会调用clss类中信息指向的那个类的无参构造函数，返回那个类的对象。但是这个方法有些情况无法获取，入类没有构造方法，或者构造方法是私有的。</p>
+</blockquote>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs reasonml">Class clazz = <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Class</span>.</span></span><span class="hljs-keyword">for</span><span class="hljs-constructor">Name(<span class="hljs-string">&quot;java.lang.ProcessBuilder&quot;</span>)</span>;<br>(ProcessBuilder) boyFirst=(ProcessBuilder) clazz.<span class="hljs-keyword">new</span><span class="hljs-constructor">Instance()</span>;<br><span class="hljs-comment">//只能获取无参构造</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="有参构造方法"><a href="#有参构造方法" class="headerlink" title="有参构造方法"></a>有参构造方法</h3><figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs gradle"><span class="hljs-keyword">Class</span> clazz = <span class="hljs-keyword">Class</span>.forName(<span class="hljs-string">&quot;java.lang.ProcessBuilder&quot;</span>);<br>((ProcessBuilder)<br>clazz.getConstructor(List.<span class="hljs-keyword">class</span>).newInstance(Arrays.<span class="hljs-keyword">asList</span>(<span class="hljs-string">&quot;calc.exe&quot;</span>))).star<br>t();<span class="hljs-comment">//调用字符参数的构造方法</span><br><br><span class="hljs-keyword">Class</span> clazz = <span class="hljs-keyword">Class</span>.forName(<span class="hljs-string">&quot;java.lang.ProcessBuilder&quot;</span>);<br>((ProcessBuilder)clazz.getConstructor(String[].<span class="hljs-keyword">class</span>).newInstance(<span class="hljs-keyword">new</span><br>String[][]&#123;&#123;<span class="hljs-string">&quot;calc.exe&quot;</span>&#125;&#125;)).start();<span class="hljs-comment">//调用可变参数，即传入数组的构造方法</span><br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>Constructor.newInstance() 可以根据传入的参数，调用任意构造函数。相比较第一个，多了对构造方法的获取。但是这个方法还是不可以获取私有的构造方法。</p>
+<p>String[][]calc.exe即newInstance方法默认传入一个数组，然后把数组第一个作为参数传入构造函数。</p>
+</blockquote>
+<h3 id="私有方法"><a href="#私有方法" class="headerlink" title="私有方法"></a>私有方法</h3><p>getDeclaredMethod()和 getDeclaredConstructor用法都和上文发不同使用相差不大。</p>
+<blockquote>
+<p>getMethod 系列方法获取的是当前类中所有公共方法，包括从父类继承的方法 getDeclaredMethod 系列方法获取的是当前类中“声明”的方法，是实在写在这个类里的，包括私 有的方法，但从父类里继承来的就不包含了。</p>
+</blockquote>
+<h4 id="私有构造方法获取"><a href="#私有构造方法获取" class="headerlink" title="私有构造方法获取"></a>私有构造方法获取</h4><figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs reasonml">Class clazz = <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Class</span>.</span></span><span class="hljs-keyword">for</span><span class="hljs-constructor">Name(<span class="hljs-string">&quot;java.lang.Runtime&quot;</span>)</span>;<br>Constructor m = clazz.get<span class="hljs-constructor">DeclaredConstructor()</span>;<br>m.set<span class="hljs-constructor">Accessible(<span class="hljs-params">true</span>)</span>;<span class="hljs-comment">//对作用域进行修改</span><br>clazz.get<span class="hljs-constructor">Method(<span class="hljs-string">&quot;exec&quot;</span>, String.<span class="hljs-params">class</span>)</span>.invoke(m.<span class="hljs-keyword">new</span><span class="hljs-constructor">Instance()</span>, <span class="hljs-string">&quot;calc.exe&quot;</span>);<br></code></pre></td></tr></table></figure>
+
+<h3 id="通用方法调用"><a href="#通用方法调用" class="headerlink" title="通用方法调用"></a>通用方法调用</h3><figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs reasonml">Class clazz = <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Class</span>.</span></span><span class="hljs-keyword">for</span><span class="hljs-constructor">Name(<span class="hljs-string">&quot;java.lang.Runtime&quot;</span>)</span>;<br>clazz.get<span class="hljs-constructor">Method(<span class="hljs-string">&quot;exec&quot;</span>,String.<span class="hljs-params">class</span>)</span>.invoke(clazz.get<span class="hljs-constructor">Method(<span class="hljs-string">&quot;getRuntime&quot;</span>)</span>.invoke(clazz),<span class="hljs-string">&quot;calc.exe&quot;</span>);<br></code></pre></td></tr></table></figure>
+
+<p>执行一个类的方法我们分为两步，首先获取包含方法信息的Method对象，然后调用其中的invoke方法来实现执行效果。</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs stylus"><span class="hljs-function"><span class="hljs-title">getMethod</span><span class="hljs-params">(参数类型)</span></span><br></code></pre></td></tr></table></figure>
+
+<p>因为方法有重载，即相同方法名不同参数。</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs stylus"><span class="hljs-function"><span class="hljs-title">invoke</span><span class="hljs-params">()</span></span><br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>invoke 的作用是执行方法，它的第一个参数是：<br>如果这个方法是一个普通方法，那么第一个参数是类对象<br>如果这个方法是一个静态方法，那么第一个参数是类。</p>
+<p>后面参数为要调用方法的参数。</p>
+</blockquote>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/ctf/" class="category-chain-item">ctf</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/ctf/java/" class="category-chain-item">java</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>反射机制</div>
+      <div>http://example.com/2023/04/11/反射机制/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>TvT</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年4月11日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2023/04/11/%E6%89%AD%E8%BD%AC%E4%B9%BE%E5%9D%A4/" title="扭转乾坤">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">扭转乾坤</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/04/11/%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/" title="信息收集">
+                        <span class="hidden-mobile">信息收集</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
