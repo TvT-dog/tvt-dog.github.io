@@ -54,4 +54,3 @@ def process_dir(dirname, out_dir):
                 print(file)
                 filepath = os.path.join(root, file)
                 process_md_file(filepath, out_dir)
-
