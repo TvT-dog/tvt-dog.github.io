@@ -16,19 +16,19 @@
   <meta name="author" content="TvT">
   <meta name="keywords" content="">
   
-    <meta name="description" content="反射 https:&#x2F;&#x2F;www.liaoxuefeng.com&#x2F;wiki&#x2F;1252599548343744&#x2F;1264799402020448,廖老师的文章确实简单易懂 https:&#x2F;&#x2F;juejin.cn&#x2F;post&#x2F;6844903564804882445，详细讲解了java如何加载类的  反射可以赋予语言动态特性。改变其中的变量，将会导致这段代码产⽣功能性的变化，即为动态特性”，后面会进行详细解释。那">
+    <meta name="description" content="反射 https:&#x2F;&#x2F;www.liaoxuefeng.com&#x2F;wiki&#x2F;1252599548343744&#x2F;1264799402020448,廖老师的文章确实简单易懂 看这篇文章之前，建议读者看看java中类的加载流程。  反射可以赋予语言动态特性。改变其中的变量，将会导致这段代码产⽣功能性的变化，即为动态特性”，后面会进行详细解释。那么反射为啥会被设计出来勒，用的最多的是各种框架。比如读取xml配">
 <meta property="og:type" content="article">
 <meta property="og:title" content="反射">
 <meta property="og:url" content="http://example.com/2023/05/08/%E5%8F%8D%E5%B0%84/index.html">
 <meta property="og:site_name" content="TvT&#39;Blog">
-<meta property="og:description" content="反射 https:&#x2F;&#x2F;www.liaoxuefeng.com&#x2F;wiki&#x2F;1252599548343744&#x2F;1264799402020448,廖老师的文章确实简单易懂 https:&#x2F;&#x2F;juejin.cn&#x2F;post&#x2F;6844903564804882445，详细讲解了java如何加载类的  反射可以赋予语言动态特性。改变其中的变量，将会导致这段代码产⽣功能性的变化，即为动态特性”，后面会进行详细解释。那">
+<meta property="og:description" content="反射 https:&#x2F;&#x2F;www.liaoxuefeng.com&#x2F;wiki&#x2F;1252599548343744&#x2F;1264799402020448,廖老师的文章确实简单易懂 看这篇文章之前，建议读者看看java中类的加载流程。  反射可以赋予语言动态特性。改变其中的变量，将会导致这段代码产⽣功能性的变化，即为动态特性”，后面会进行详细解释。那么反射为啥会被设计出来勒，用的最多的是各种框架。比如读取xml配">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/img/7.jpg">
+<meta property="og:image" content="http://example.com/img/3.jpg">
 <meta property="article:published_time" content="2023-05-08T05:29:09.198Z">
-<meta property="article:modified_time" content="2023-05-08T08:45:51.926Z">
+<meta property="article:modified_time" content="2023-05-09T07:13:03.984Z">
 <meta property="article:author" content="TvT">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://example.com/img/7.jpg">
+<meta name="twitter:image" content="http://example.com/img/3.jpg">
   
   
   
@@ -210,7 +210,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.7k 字
+          5.3k 字
         
       </span>
     
@@ -221,7 +221,7 @@
         
         
         
-          14 分钟
+          44 分钟
         
       </span>
     
@@ -266,46 +266,76 @@
                 
                 <h1 id="反射"><a href="#反射" class="headerlink" title="反射"></a>反射</h1><blockquote>
 <p><a target="_blank" rel="noopener" href="https://www.liaoxuefeng.com/wiki/1252599548343744/1264799402020448,%E5%BB%96%E8%80%81%E5%B8%88%E7%9A%84%E6%96%87%E7%AB%A0%E7%A1%AE%E5%AE%9E%E7%AE%80%E5%8D%95%E6%98%93%E6%87%82">https://www.liaoxuefeng.com/wiki/1252599548343744/1264799402020448,廖老师的文章确实简单易懂</a></p>
-<p><a target="_blank" rel="noopener" href="https://juejin.cn/post/6844903564804882445%EF%BC%8C%E8%AF%A6%E7%BB%86%E8%AE%B2%E8%A7%A3%E4%BA%86java%E5%A6%82%E4%BD%95%E5%8A%A0%E8%BD%BD%E7%B1%BB%E7%9A%84">https://juejin.cn/post/6844903564804882445，详细讲解了java如何加载类的</a></p>
+<p>看这篇文章之前，建议读者看看java中类的加载流程。</p>
 </blockquote>
 <p>反射可以赋予语言动态特性。改变其中的变量，将会导致这段代码产⽣功能性的变化，即为动态特性”，后面会进行详细解释。那么反射为啥会被设计出来勒，用的最多的是各种框架。比如读取xml配置文件时，就会根据xml的内容对类进行加载。</p>
-<h2 id="java类加载"><a href="#java类加载" class="headerlink" title="java类加载"></a>java类加载</h2><p>我们都知道我们的java代码都是被编译为Class文件，然后再被jvm加载进行执行的。java虚拟机把描述类的数据从Class文件加载到内存，并对数据进行校验、转换解析和初始化，最终形成可以被虚拟机直接使用的Java类型。</p>
-<p><img src="https://cdn.jsdelivr.net/gh/TvT-dog/img@main/blogimage-20230506213542004.png" srcset="/img/loading.gif" lazyload alt="image-20230506213542004"></p>
-<h3 id="加载"><a href="#加载" class="headerlink" title="加载"></a>加载</h3><blockquote>
-<p>将类的.class文件中的二进制数据读入到内存中，将其放在运行时数据区的方法区内，然后在堆区创建一个java.lang.Class对象，用来封装类在方法区内的数据结构。类的加载的最终产品是位于堆区中的Class对象。（简单来说，就是读取Class文件）</p>
+<h2 id="Class类"><a href="#Class类" class="headerlink" title="Class类"></a>Class类</h2><blockquote>
+<p>要加载一个类，我们必需提供给jvm类的相关信息。平常代码是直接在java代码中写明了，而在反射中因为是动态读取的。为了实现反射这个功能，java有一个类专门用来对类的信息进行保存，这个类就是Class类。</p>
 </blockquote>
-<p>虚拟机完成了以下三件事情：</p>
-<p>1.获取类的二进制字节流。<br>2.将这个字节流所代表的静态存储结构转化为方法区的运行时数据结构。<br>3.在java堆中生成一个代表这个类的java.lang.Class对象，作为方法区这些数据的访问入口。</p>
-<p>注意：</p>
-<p>第一步中的获取二进制字节流有多种方式，</p>
-<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs markdown"><span class="hljs-bullet">1.</span> 从本地系统中直接加载 <br><span class="hljs-bullet">2.</span> 通过网络下载.class文件 <br><span class="hljs-bullet">3.</span> 从zip，jar等归档文件中加载.class文件 <br><span class="hljs-bullet">4.</span> 从专有数据库中提取.class文件 <br><span class="hljs-bullet">5.</span> 将Java源文件动态编译为.class文件<br></code></pre></td></tr></table></figure>
+<p>除了<code>int</code>等基本类型外，Java的其他类型全部都是<code>class</code>（包括<code>interface</code>）。万物为对象，每加载一种<code>class</code>，JVM就为其创建一个<code>Class</code>类型的实例，并关联起来（为什么要这么干，为了实现反射功能）。</p>
+<h2 id="获取Class类"><a href="#获取Class类" class="headerlink" title="获取Class类"></a>获取Class类</h2><p>直接通过一个<code>class</code>的静态变量<code>class</code>获取：</p>
+<figure class="highlight delphi"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs delphi"><span class="hljs-keyword">Class</span> cls = <span class="hljs-keyword">String</span>.<span class="hljs-keyword">class</span>;<br></code></pre></td></tr></table></figure>
 
-<h3 id="连接"><a href="#连接" class="headerlink" title="连接"></a>连接</h3><h4 id="验证"><a href="#验证" class="headerlink" title="验证"></a>验证</h4><blockquote>
-<p>确保Class文件中的字节流包含的信息符合当前虚拟机的要求，而且不会危害虚拟机自身的安全。</p>
-</blockquote>
-<p>1.文件格式的验证：验证字节流是否符合Class文件格式的规范,经过该阶段的验证后,字节流才会进入内存的方法区中进行存储，后面的三个验证都是基于方法区的存储结构进行的。</p>
-<p>2.元数据验证：对类的元数据信息进行语义校验。</p>
-<p>3.字节码验证：对类的方法体进行校验分析，以保证被校验的类的方法在运行时不会做出危害虚拟机安全的行为。</p>
-<p>4.符号引用验证：这是最后一个阶段的验证，它发生在虚拟机将符号引用转化为直接引用的时候（解析阶段中发生该转化，后面会有讲解），主要是对类自身以外的信息（常量池中的各种符号引用）进行匹配性的校验。</p>
-<h4 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h4><blockquote>
-<p>准备阶段是正式为类变量分配内存并设置类变量初始值的阶段</p>
-</blockquote>
-<p>这时候进行内存分配的仅包括类变量(static),而不包括实例变量,这里所设置的初始值通常情况下是数据类型默认的零值。</p>
-<h4 id="解析"><a href="#解析" class="headerlink" title="解析"></a>解析</h4><blockquote>
-<p>解析阶段是虚拟机将常量池内的符号引用替换为直接引用的过程。</p>
-</blockquote>
-<p>符号引用（Symbolic Reference）：符号引用以一组符号来描述所引用的目标，符号引用可以是任何形式的字面量，引用的目标并不一定已经在内存中。</p>
-<p>直接引用（Direct Reference）：直接引用可以是直接指向目标的指针、相对偏移量或是一个能间接定位到目标的句柄。直接引用是与虚拟机实现的内存布局相关的，如果有了直接引用，那引用的目标必定已经在内存中存在。</p>
-<h3 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h3><blockquote>
-<p>为类的静态变量赋予正确的初始值，JVM负责对类进行初始化，主要对类变量进行初始化。</p>
-</blockquote>
-<p>初始化步骤</p>
-<p>1、假如这个类还没有被加载和连接，则程序先加载并连接该类</p>
-<p>2、假如该类的直接父类还没有被初始化，则先初始化其直接父类</p>
-<p>3、假如类中有初始化语句，则系统依次执行这些初始化语句</p>
-<p>我们先了解一下java是如何加载类的。java中除了<code>int</code>等基本类型外，Java的其他类型全部都是<code>class</code>（包括<code>interface</code>）。每加载一种<code>class</code>，JVM就为其创建一个<code>Class</code>类型的实例，并关联起来。以<code>String</code>类为例，当JVM加载<code>String</code>类时，它首先读取<code>String.class</code>文件到内存，然后，为<code>String</code>类创建一个<code>Class</code>实例并关联起来：</p>
-<figure class="highlight vbnet"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs vbnet"><span class="hljs-keyword">Class</span> cls = <span class="hljs-built_in">new</span> <span class="hljs-keyword">Class</span>(<span class="hljs-type">String</span>);<br></code></pre></td></tr></table></figure>
+<p>如果我们有一个实例变量，可以通过该实例变量提供的<code>getClass()</code>方法获取：</p>
+<figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs abnf">String s <span class="hljs-operator">=</span> <span class="hljs-string">&quot;Hello&quot;</span><span class="hljs-comment">;</span><br>Class cls <span class="hljs-operator">=</span> s.getClass()<span class="hljs-comment">;</span><br></code></pre></td></tr></table></figure>
 
+<p>如果知道一个<code>class</code>的完整类名，可以通过静态方法<code>Class.forName()</code>获取：</p>
+<figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs abnf">Class cls <span class="hljs-operator">=</span> Class.forName(<span class="hljs-string">&quot;java.lang.String&quot;</span>)<span class="hljs-comment">;</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="字段访问"><a href="#字段访问" class="headerlink" title="字段访问"></a>字段访问</h2><blockquote>
+<p>一个<code>Field</code>对象包含了一个字段的所有信息，而<code>Field</code>对象存储在Class类中</p>
+</blockquote>
+<h3 id="获取Field"><a href="#获取Field" class="headerlink" title="获取Field"></a>获取Field</h3><p>获取单个</p>
+<p>getField(name)：根据字段名获取某个public的field（包括父类）</p>
+<p>getDeclaredField(name)：根据字段名获取当前类的某个field（不包括父类）</p>
+<p>获取多个</p>
+<p>getFields()：获取所有public的field（包括父类）</p>
+<p>getDeclaredFields()：获取当前类的所有field（不包括父类）</p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs pgsql"><span class="hljs-built_in">public</span> <span class="hljs-keyword">class</span> Main &#123;<br>    <span class="hljs-built_in">public</span> static <span class="hljs-type">void</span> main(String[] args) throws <span class="hljs-keyword">Exception</span> &#123;<br>        <span class="hljs-keyword">Class</span> stdClass = Student.<span class="hljs-keyword">class</span>;<br>        // 获取<span class="hljs-built_in">public</span>字段&quot;score&quot;:<br>        <span class="hljs-keyword">System</span>.<span class="hljs-keyword">out</span>.println(stdClass.getField(&quot;score&quot;));<br>        // 获取继承的<span class="hljs-built_in">public</span>字段&quot;name&quot;:<br>        <span class="hljs-keyword">System</span>.<span class="hljs-keyword">out</span>.println(stdClass.getField(&quot;name&quot;));<br>        // 获取private字段&quot;grade&quot;:<br>        <span class="hljs-keyword">System</span>.<span class="hljs-keyword">out</span>.println(stdClass.getField(&quot;ytest&quot;));<br>        //报错，因为不包括父类了<br>        <span class="hljs-keyword">System</span>.<span class="hljs-keyword">out</span>.println(stdClass.getDeclaredField(&quot;grade&quot;));<br>    &#125;<br>&#125;<br><br><span class="hljs-keyword">class</span> Student extends Person &#123;<br>    <span class="hljs-built_in">public</span> <span class="hljs-type">int</span> score;<br>    private <span class="hljs-type">int</span> grade;<br>&#125;<br><br><span class="hljs-keyword">class</span> Person &#123;<br>    <span class="hljs-built_in">public</span> String <span class="hljs-type">name</span>;<br>    private <span class="hljs-type">int</span> test;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+<h3 id="获取字段信息"><a href="#获取字段信息" class="headerlink" title="获取字段信息"></a>获取字段信息</h3><ul>
+<li><code>getName()</code>：返回字段名称，例如，<code>&quot;name&quot;</code>；</li>
+<li><code>getType()</code>：返回字段类型，也是一个<code>Class</code>实例，例如，<code>String.class</code>；</li>
+<li><code>getModifiers()</code>：返回字段的修饰符，它是一个<code>int</code>，不同的bit表示不同的含义。</li>
+<li>get（）：获取值</li>
+<li>setAccessible（）,修改修饰符，用来访问private属性</li>
+</ul>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs pgsql"><span class="hljs-built_in">public</span> <span class="hljs-keyword">class</span> Main &#123;<br>    <span class="hljs-built_in">public</span> static <span class="hljs-type">void</span> main(String[] args) throws <span class="hljs-keyword">Exception</span> &#123;<br>        <span class="hljs-keyword">Object</span> p = <span class="hljs-built_in">new</span> Person(&quot;Xiao Ming&quot;);<br>        <span class="hljs-keyword">Class</span> c = p.getClass();<br>        Field f = c.getDeclaredField(&quot;name&quot;);<br>        <span class="hljs-keyword">Object</span> <span class="hljs-keyword">value</span> = f.<span class="hljs-keyword">get</span>(p);<br>        <span class="hljs-keyword">System</span>.<span class="hljs-keyword">out</span>.println(<span class="hljs-keyword">value</span>); // &quot;Xiao Ming&quot;<br>    &#125;<br>&#125;<br><br><span class="hljs-keyword">class</span> Person &#123;<br>    private String <span class="hljs-type">name</span>;<br>    <span class="hljs-built_in">public</span> Person(String <span class="hljs-type">name</span>) &#123;<br>        this.name = <span class="hljs-type">name</span>;<br>    &#125;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+<p>运行代码，如果不出意外，会得到一个<code>IllegalAccessException</code>，这是因为<code>name</code>被定义为一个<code>private</code>字段。我们给代码加上</p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs reasonml">f.set<span class="hljs-constructor">Accessible(<span class="hljs-params">true</span>)</span>;<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs pgsql"><span class="hljs-built_in">public</span> <span class="hljs-keyword">class</span> Main &#123;<br><br>    <span class="hljs-built_in">public</span> static <span class="hljs-type">void</span> main(String[] args) throws <span class="hljs-keyword">Exception</span> &#123;<br>        Person p = <span class="hljs-built_in">new</span> Person(&quot;Xiao Ming&quot;);<br>        <span class="hljs-keyword">System</span>.<span class="hljs-keyword">out</span>.println(p.getName()); // &quot;Xiao Ming&quot;<br>        <span class="hljs-keyword">Class</span> c = p.getClass();<br>        Field f = c.getDeclaredField(&quot;name&quot;);<br>        f.setAccessible(<span class="hljs-keyword">true</span>);<br>        f.<span class="hljs-keyword">set</span>(p, &quot;Xiao Hong&quot;);<br>        <span class="hljs-keyword">System</span>.<span class="hljs-keyword">out</span>.println(p.getName()); // &quot;Xiao Hong&quot;<br>    &#125;<br>&#125;<br><br><span class="hljs-keyword">class</span> Person &#123;<br>    private String <span class="hljs-type">name</span>;<br><br>    <span class="hljs-built_in">public</span> Person(String <span class="hljs-type">name</span>) &#123;<br>        this.name = <span class="hljs-type">name</span>;<br>    &#125;<br><br>    <span class="hljs-built_in">public</span> String getName() &#123;<br>        <span class="hljs-keyword">return</span> this.name;<br>    &#125;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+<h2 id="方法调用"><a href="#方法调用" class="headerlink" title="方法调用"></a>方法调用</h2><h3 id="获取Method"><a href="#获取Method" class="headerlink" title="获取Method"></a>获取Method</h3><blockquote>
+<p>跟field一样的，Method存储在Class中的</p>
+</blockquote>
+<h4 id="单个方法获取"><a href="#单个方法获取" class="headerlink" title="单个方法获取"></a>单个方法获取</h4><p>getMethod(name, Class…)：<br>获取某个public的Method（包括父类）</p>
+<p>getDeclaredMethod(name, Class…)：<br>获取当前类的某个Method（不包括父类）</p>
+<h4 id="多个方法获取"><a href="#多个方法获取" class="headerlink" title="多个方法获取"></a>多个方法获取</h4><p>getMethods()<br>获取所有public的Method（包括父类）</p>
+<p>getDeclaredMethods()<br>获取当前类的所有Method（不包括父类）</p>
+<figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs arduino"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Main</span> &#123;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-type">static</span> <span class="hljs-type">void</span> <span class="hljs-title">main</span><span class="hljs-params">(<span class="hljs-type">String</span>[] args)</span> throws Exception </span>&#123;<br>        Class stdClass = Student.<span class="hljs-keyword">class</span>;<br>        <span class="hljs-comment">// 获取public方法getScore，参数为String:</span><br>        System.out.<span class="hljs-built_in">println</span>(stdClass.<span class="hljs-built_in">getMethod</span>(<span class="hljs-string">&quot;getScore&quot;</span>, <span class="hljs-type">String</span>.<span class="hljs-keyword">class</span>));<br>        <span class="hljs-comment">// 获取继承的public方法getName，无参数:</span><br>        System.out.<span class="hljs-built_in">println</span>(stdClass.<span class="hljs-built_in">getMethod</span>(<span class="hljs-string">&quot;getName&quot;</span>));<br>        <span class="hljs-comment">// 获取private方法getGrade，参数为int:</span><br>        System.out.<span class="hljs-built_in">println</span>(stdClass.<span class="hljs-built_in">getDeclaredMethod</span>(<span class="hljs-string">&quot;getGrade&quot;</span>, <span class="hljs-type">int</span>.<span class="hljs-keyword">class</span>));<br>    &#125;<br>&#125;<br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Student</span> extends Person &#123;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-type">int</span> <span class="hljs-title">getScore</span><span class="hljs-params">(<span class="hljs-type">String</span> type)</span> </span>&#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-number">99</span>;<br>    &#125;<br>    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-type">int</span> <span class="hljs-title">getGrade</span><span class="hljs-params">(<span class="hljs-type">int</span> year)</span> </span>&#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>;<br>    &#125;<br>&#125;<br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Person</span> &#123;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-type">String</span> <span class="hljs-title">getName</span><span class="hljs-params">()</span> </span>&#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;Person&quot;</span>;<br>    &#125;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+<h3 id="获取方法信息"><a href="#获取方法信息" class="headerlink" title="获取方法信息"></a>获取方法信息</h3><p>getName()：返回方法名称<br>getReturnType()：返回方法返回值类型<br>getParameterTypes()：返回方法的参数类型，是一个Class数组<br>getModifiers()：返回方法的修饰符</p>
+<h3 id="执行方法"><a href="#执行方法" class="headerlink" title="执行方法"></a>执行方法</h3><h4 id="普通方法"><a href="#普通方法" class="headerlink" title="普通方法"></a>普通方法</h4><p>invoke（）</p>
+<blockquote>
+<p><code>invoke</code>的第一个参数是对象实例，即在哪个实例上调用该方法，后面的可变参数要与方法参数一致，否则将报错。</p>
+</blockquote>
+<figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs arduino"><span class="hljs-keyword">import</span> java.lang.reflect.Method;<br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Main</span> &#123;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-type">static</span> <span class="hljs-type">void</span> <span class="hljs-title">main</span><span class="hljs-params">(<span class="hljs-type">String</span>[] args)</span> throws Exception </span>&#123;<br>        <span class="hljs-comment">// String对象:</span><br>        <span class="hljs-type">String</span> s = <span class="hljs-string">&quot;Hello world&quot;</span>;<br>        <span class="hljs-comment">// 获取String substring(int)方法，参数为int:</span><br>        Method m = <span class="hljs-type">String</span>.<span class="hljs-keyword">class</span>.<span class="hljs-built_in">getMethod</span>(<span class="hljs-string">&quot;substring&quot;</span>, <span class="hljs-type">int</span>.<span class="hljs-keyword">class</span>);<br>        <span class="hljs-comment">// 在s对象上调用该方法并获取结果:</span><br>        <span class="hljs-type">String</span> r = (<span class="hljs-type">String</span>) m.<span class="hljs-built_in">invoke</span>(s, <span class="hljs-number">6</span>);<br>        <span class="hljs-comment">// 打印调用结果:</span><br>        System.out.<span class="hljs-built_in">println</span>(r);<br>    &#125;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+<h4 id="静态方法"><a href="#静态方法" class="headerlink" title="静态方法"></a>静态方法</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">import</span> java.lang.reflect.Method;<br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Main</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> Exception &#123;<br>        <span class="hljs-comment">// 获取Integer.parseInt(String)方法，参数为String:</span><br>        <span class="hljs-type">Method</span> <span class="hljs-variable">m</span> <span class="hljs-operator">=</span> Integer.class.getMethod(<span class="hljs-string">&quot;parseInt&quot;</span>, String.class);<br>        <span class="hljs-comment">// 调用该静态方法并获取结果:</span><br>        <span class="hljs-type">Integer</span> <span class="hljs-variable">n</span> <span class="hljs-operator">=</span> (Integer) m.invoke(<span class="hljs-literal">null</span>, <span class="hljs-string">&quot;12345&quot;</span>);<br>        <span class="hljs-comment">// 打印调用结果:</span><br>        System.out.println(n);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h4 id="非public方法"><a href="#非public方法" class="headerlink" title="非public方法"></a>非public方法</h4><blockquote>
+<p>类似于Field，我们使用<code>Method.setAccessible(true)</code>允许其调用</p>
+</blockquote>
+<h4 id="多态方法"><a href="#多态方法" class="headerlink" title="多态方法"></a>多态方法</h4><p>一个<code>Person</code>类定义了<code>hello()</code>方法，并且它的子类<code>Student</code>也覆写了<code>hello()</code>方法，那么，从<code>Person.class</code>获取的<code>Method</code>，作用于<code>Student</code>实例时，调用的方法到底是哪个？</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">import</span> java.lang.reflect.Method;<br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Main</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> Exception &#123;<br>        <span class="hljs-comment">// 获取Person的hello方法:</span><br>        <span class="hljs-type">Method</span> <span class="hljs-variable">h</span> <span class="hljs-operator">=</span> Person.class.getMethod(<span class="hljs-string">&quot;hello&quot;</span>);<br>        <span class="hljs-comment">// 对Student实例调用hello方法:</span><br>        h.invoke(<span class="hljs-keyword">new</span> <span class="hljs-title class_">Student</span>());<br>    &#125;<br>&#125;<br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Person</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">hello</span><span class="hljs-params">()</span> &#123;<br>        System.out.println(<span class="hljs-string">&quot;Person:hello&quot;</span>);<br>    &#125;<br>&#125;<br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Student</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_">Person</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">hello</span><span class="hljs-params">()</span> &#123;<br>        System.out.println(<span class="hljs-string">&quot;Student:hello&quot;</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>运行上述代码，发现打印出的是<code>Student:hello</code>，因此，使用反射调用方法时，仍然遵循多态原则</p>
+<figure class="highlight oxygene"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs oxygene"><span class="hljs-keyword">Method</span> <span class="hljs-title function_">m</span> = <span class="hljs-title function_">Person</span>.<span class="hljs-title function_">class</span>.<span class="hljs-title function_">getMethod</span><span class="hljs-params">(&quot;hello&quot;)</span>;<br>m.invoke(<span class="hljs-keyword">new</span> Student())<span class="hljs-punctuation">;</span><br></code></pre></td></tr></table></figure>
+
+<p>实际上相当于：</p>
+<figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs abnf">Person p <span class="hljs-operator">=</span> new Student()<span class="hljs-comment">;</span><br>p.hello()<span class="hljs-comment">;</span><br></code></pre></td></tr></table></figure>
 
                 
               </div>
@@ -402,6 +432,12 @@
                 <div class="post-prevnext my-3">
                   <article class="post-prev col-6">
                     
+                    
+                      <a href="/2023/05/09/web-%E7%BA%A2%E5%8C%85%E9%A2%98%E7%AC%AC%E4%B8%83%E5%BC%B9%20%7B%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E5%87%BD%E6%95%B0%E7%BB%95%E8%BF%87%7D/" title="web-红包题第七弹 {命令执行函数绕过}">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">web-红包题第七弹 {命令执行函数绕过}</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
                     
                   </article>
                   <article class="post-next col-6">
