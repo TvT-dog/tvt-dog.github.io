@@ -1,0 +1,398 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=dark>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/avatar.png">
+  <link rel="icon" href="/img/avatar.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="TvT">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="正则匹配 好久之前就学过了，但是一直没进行归纳总结，进行总结一手。😙 https:&#x2F;&#x2F;www.runoob.com&#x2F;regexp&#x2F;regexp-syntax.html，感觉菜鸟这个写的很乱，整理了一下  匹配字符[ABC] 表示匹配括号中的任意一个字符 [^ABC] 表示匹配f非括号中的任意一个字符 [A-Z]  表示一个区间，匹配所有大写字母，[a-z] 表示所有小写字母。 [.] 匹配除换行">
+<meta property="og:type" content="website">
+<meta property="og:title" content="page.title">
+<meta property="og:url" content="http://example.com/essay/%E5%BC%80%E5%8F%91%E7%9F%A5%E8%AF%86/%E6%AD%A3%E5%88%99%E5%8C%B9%E9%85%8D.html">
+<meta property="og:site_name" content="TvT&#39;Blog">
+<meta property="og:description" content="正则匹配 好久之前就学过了，但是一直没进行归纳总结，进行总结一手。😙 https:&#x2F;&#x2F;www.runoob.com&#x2F;regexp&#x2F;regexp-syntax.html，感觉菜鸟这个写的很乱，整理了一下  匹配字符[ABC] 表示匹配括号中的任意一个字符 [^ABC] 表示匹配f非括号中的任意一个字符 [A-Z]  表示一个区间，匹配所有大写字母，[a-z] 表示所有小写字母。 [.] 匹配除换行">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-05-10T11:48:14.116Z">
+<meta property="article:modified_time" content="2023-05-10T11:48:14.045Z">
+<meta property="article:author" content="TvT">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>page.title - TvT&#39;Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="TvT'Blog" type="application/atom+xml">
+</head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 60vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>TvT</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                <span>友链</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="page.title"></span>
+          
+        </div>
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      <div class="container nopadding-x-md">
+        <div id="board"
+          >
+          
+          <div class="container">
+            <div class="row">
+              <div class="col-12 col-md-10 m-auto">
+                
+
+<article class="page-content">
+  <h1 id="正则匹配"><a href="#正则匹配" class="headerlink" title="正则匹配"></a>正则匹配</h1><blockquote>
+<p>好久之前就学过了，但是一直没进行归纳总结，进行总结一手。😙</p>
+<p><a target="_blank" rel="noopener" href="https://www.runoob.com/regexp/regexp-syntax.html%EF%BC%8C%E6%84%9F%E8%A7%89%E8%8F%9C%E9%B8%9F%E8%BF%99%E4%B8%AA%E5%86%99%E7%9A%84%E5%BE%88%E4%B9%B1%EF%BC%8C%E6%95%B4%E7%90%86%E4%BA%86%E4%B8%80%E4%B8%8B">https://www.runoob.com/regexp/regexp-syntax.html，感觉菜鸟这个写的很乱，整理了一下</a></p>
+</blockquote>
+<h2 id="匹配字符"><a href="#匹配字符" class="headerlink" title="匹配字符"></a>匹配字符</h2><p>[ABC]</p>
+<p>表示匹配括号中的任意一个字符</p>
+<p>[^ABC]</p>
+<p>表示匹配f非括号中的任意一个字符</p>
+<p>[A-Z] </p>
+<p>表示一个区间，匹配所有大写字母，[a-z] 表示所有小写字母。</p>
+<p>[.]</p>
+<p>匹配除换行符（\n、\r）之外的任何单个字符，相等于 <code>[^\n\r]</code>。</p>
+<p>[\s\S]</p>
+<p>\s 是匹配所有空白符，包括换行，\S 非空白符，不包括换行。</p>
+<p>\w</p>
+<p>匹配字母、数字、下划线。等价于 [A-Za-z0-9_] </p>
+<h2 id="匹配次数"><a href="#匹配次数" class="headerlink" title="匹配次数"></a>匹配次数</h2><blockquote>
+<p>限定符用来指定正则表达式的一个给定组件必须要出现多少次才能满足匹配。有 * 或 + 或 ? 或 {n} 或 {n,} 或 {n,m} 共6种</p>
+</blockquote>
+<ul>
+<li></li>
+</ul>
+<p>匹配前面的子表达式零次或多次。</p>
+<p>?</p>
+<p>匹配前面的子表达式零次或一次</p>
+<ul>
+<li></li>
+</ul>
+<p>匹配前面的子表达式一次或多次</p>
+<p>{n}</p>
+<p>n 是一个非负整数。匹配确定的 <strong>n</strong> 次。</p>
+<p>{n,}</p>
+<p>n 是一个非负整数。至少匹配n 次</p>
+<p>{n,m}</p>
+<p>最少匹配 n 次且最多匹配 m 次</p>
+<h2 id="匹配长度"><a href="#匹配长度" class="headerlink" title="匹配长度"></a>匹配长度</h2><blockquote>
+<p>贪婪,既字符符合条件下，字符长度尽可能长。</p>
+</blockquote>
+<p>* 和 + 限定符都是贪婪的，因为它们会尽可能多的匹配文字，只有在它们的后面加上一个 ? 就可以实现非贪婪或最小匹配。</p>
+<p>例如</p>
+<p><code>&lt;h1&gt;111&lt;h1&gt;</code></p>
+<figure class="highlight bnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bnf">/<span class="hljs-attribute">&lt;.*&gt;</span>/<br><span class="hljs-attribute">&lt;h1&gt;</span>111<span class="hljs-attribute">&lt;h1&gt;</span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs awk"><span class="hljs-regexp">/&lt;\w+?&gt;/</span><br>&lt;h1&gt;<br></code></pre></td></tr></table></figure>
+
+<p>因为.可以为仍何字符，使用？来进行非贪婪匹配，就会选择最短的字符。</p>
+<h2 id="字符位置"><a href="#字符位置" class="headerlink" title="字符位置"></a>字符位置</h2><blockquote>
+<p>我们使用定位符来进行确定</p>
+</blockquote>
+<p>定位符用来描述字符串或单词的边界，^ 和 $ 分别指字符串的开始与结束，\b 描述单词的前或后边界，\B 表示非单词边界。</p>
+<p>匹配一个章节标题，该标题只包含两个尾随数字，并且出现在行首：</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk"><span class="hljs-regexp">/^Chapter [1-9][0-9]&#123;0,1&#125;/</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="字符选择"><a href="#字符选择" class="headerlink" title="字符选择"></a>字符选择</h2><blockquote>
+<p>有时我们想提取一段文字中的多个字符串</p>
+</blockquote>
+<p>用圆括号 () 将所有选择项括起来，相邻的选择项之间用 | 分隔。</p>
+<h2 id="一些其他设置"><a href="#一些其他设置" class="headerlink" title="一些其他设置"></a>一些其他设置</h2><p>标记不写在正则表达式里，标记位于表达式之外</p>
+<p>i</p>
+<p>将匹配设置为不区分大小写</p>
+<p>g</p>
+<p>查找所有的匹配项。<br>m	</p>
+<p>使边界字符 ^ 和 $ 匹配每一行的开头和结尾，记住是多行，而不是整个字符串的开头和结尾。<br>s	</p>
+<p>特殊字符圆点 . 中包含换行符 \n。加上 s 修饰符之后, . 中包含换行符 \n。</p>
+
+
+  
+
+</article>
+
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
